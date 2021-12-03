@@ -1,26 +1,26 @@
-package com.example.model;
+package com.example.entity;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name="usr")
-public class User {
+@Table(name="account")
+public class Account {
 
     @Id
     @GeneratedValue
     @Column(name="id")
     private Long id;
 
-    @Column(name="login")
+    @Column(name="login", unique = true)
     private String login;
 
     @Column(name="password")
     private String password;
 
-    @Column(name="cityName")
-    private String cityName;
+    @Column(name="role")
+    private Role role;
 
-    public User() {}
+    public Account() {}
 
     public Long getId() {
         return id;
@@ -46,11 +46,11 @@ public class User {
         this.password = password;
     }
 
-    public String getCityName() {
-        return cityName;
+    public Role getRole() {
+        return role;
     }
 
-    public void setCityName(String cityName) {
-        this.cityName = cityName;
+    public void setRole(Role role) {
+        this.role = role;
     }
 }

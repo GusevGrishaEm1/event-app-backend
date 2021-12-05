@@ -20,6 +20,10 @@ public class Account {
     @Column(name="role")
     private Role role;
 
+    @OneToOne
+    @JoinColumn(name="user_id")
+    private DefaultUser defaultUser;
+
     public Account() {}
 
     public Long getId() {

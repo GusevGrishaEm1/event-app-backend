@@ -1,9 +1,9 @@
 package com.example.model.account;
 
-import com.example.entity.Account;
+import com.example.entity.User;
 import com.example.entity.Role;
 
-public class NewAccountDto {
+public class NewUserDto {
 
     private String login;
 
@@ -11,7 +11,7 @@ public class NewAccountDto {
 
     private Role role;
 
-    public NewAccountDto(String login, String password, Role role) {
+    public NewUserDto(String login, String password, Role role) {
         this.login = login;
         this.password = password;
         this.role = role;
@@ -41,11 +41,11 @@ public class NewAccountDto {
         this.role = role;
     }
 
-    public static Account toEntity(NewAccountDto accountDto) {
-        Account accountEntity = new Account();
-        accountEntity.setLogin(accountDto.getLogin());
-        accountEntity.setPassword(accountDto.getPassword());
-        accountEntity.setRole(accountDto.getRole());
-        return accountEntity;
+    public static User toEntity(NewUserDto accountDto) {
+        User userEntity = new User();
+        userEntity.setLogin(accountDto.getLogin());
+        userEntity.setPassword(accountDto.getPassword());
+        userEntity.setRole(accountDto.getRole());
+        return userEntity;
     }
 }

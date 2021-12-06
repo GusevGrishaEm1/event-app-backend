@@ -28,9 +28,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/accounts/register/*", "/accounts/login").permitAll()
-                .antMatchers("/accounts/default/**").hasAnyAuthority(Role.USER_DEFAULT.name())
-                .antMatchers("/accounts/business/**").hasAnyAuthority(Role.USER_BUSINESS.name())
+                .antMatchers("/users/register/*", "/users/login").permitAll()
+                .antMatchers("/default/**").hasAnyAuthority(Role.USER_DEFAULT.name())
+                .antMatchers("/business/**").hasAnyAuthority(Role.USER_BUSINESS.name())
                 .anyRequest().authenticated()
                 .and()
                 .apply(new JwtConfigure(jwtProvider));

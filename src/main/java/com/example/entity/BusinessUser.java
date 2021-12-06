@@ -5,22 +5,23 @@ import javax.persistence.*;
 @Entity
 @Table(name="businessUser")
 public class BusinessUser {
+
     @Id
-    @Column
+    @GeneratedValue
+    @Column(name = "id")
     private Long id;
 
-    @Column
+    @Column(name = "companyName")
     private String companyName;
 
-    @Column
+    @Column(name = "address")
     private String address;
 
-    // @OneToOne(cascade = CascadeType.ALL, mappedBy = "businessUser")
-    // private Account account;
+    @OneToOne
+    @JoinColumn(name = "usr_id", referencedColumnName = "id")
+    private User user;
 
-
-    public BusinessUser() {
-    }
+    public BusinessUser() {}
 
     public Long getId() {
         return id;

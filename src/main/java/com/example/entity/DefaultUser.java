@@ -6,21 +6,24 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "defaultUser")
 public class DefaultUser {
+
     @Id
-    @Column
+    @GeneratedValue
+    @Column(name="id")
     private Long id;
 
-    @Column
-    private String userName;
+    @Column(name = "username")
+    private String username;
 
-    @Column
+    @Column(name = "cityName")
     private String cityName;
 
-    @Column
+    @Column(name = "bDay")
     private LocalDate bDay;
 
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "defaultUser")
-    private Account account;
+    @OneToOne
+    @JoinColumn(name = "usr_id", referencedColumnName = "id")
+    private User user;
 
     public DefaultUser() {
     }
@@ -33,12 +36,12 @@ public class DefaultUser {
         this.id = id;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getCityName() {
@@ -49,19 +52,12 @@ public class DefaultUser {
         this.cityName = cityName;
     }
 
-    public LocalDate getbDay() {
+    public LocalDate getBDay() {
         return bDay;
     }
 
-    public void setbDay(LocalDate bDay) {
+    public void setBDay(LocalDate bDay) {
         this.bDay = bDay;
     }
 
-    public Account getAccount() {
-        return account;
-    }
-
-    public void setAccount(Account account) {
-        this.account = account;
-    }
 }

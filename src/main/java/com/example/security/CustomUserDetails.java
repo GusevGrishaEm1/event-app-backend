@@ -1,25 +1,24 @@
 package com.example.security;
 
-import com.example.entity.Account;
+import com.example.entity.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
-
 import java.util.Collection;
 import java.util.List;
 
-public class AccountDetails implements UserDetails {
+public class CustomUserDetails implements UserDetails {
 
     private String login;
     private String password;
     private List<GrantedAuthority> authorities;
 
-    public static AccountDetails fromAccountEntityToAccountDetails(Account account) {
-        AccountDetails accountDetails = new AccountDetails();
-        accountDetails.login = account.getLogin();
-        accountDetails.password = account.getPassword();
-        accountDetails.authorities = AuthorityUtils.createAuthorityList(account.getRole().name());
-        return accountDetails;
+    public static CustomUserDetails fromUserEntityToUserDetails(User user) {
+        CustomUserDetails customUserDetails = new CustomUserDetails();
+        customUserDetails.login = user.getLogin();
+        customUserDetails.password = user.getPassword();
+        customUserDetails.authorities = AuthorityUtils.createAuthorityList(user.getRole().name());
+        return customUserDetails;
     }
 
     @Override

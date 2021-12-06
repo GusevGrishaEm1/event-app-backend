@@ -6,12 +6,12 @@ import com.example.model.businessUser.NewBusinessUserDto;
 import com.example.repository.BusinessUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service
 public class BusinessUserService {
-    private BusinessUserRepository businessUserRepository;
+
+    private final BusinessUserRepository businessUserRepository;
 
     @Autowired
     public BusinessUserService(BusinessUserRepository businessUserRepository) {
@@ -34,7 +34,8 @@ public class BusinessUserService {
     public BusinessUser add(NewBusinessUserDto newBusinessUserDto){
         try{
             return newBusinessUserDto.toEntity(newBusinessUserDto);
-        }catch (Exception e){
+        }
+        catch (Exception e){
             //write exc
             return null;
         }

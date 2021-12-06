@@ -6,12 +6,12 @@ import com.example.model.defaultUser.NewDefaultUserDto;
 import com.example.repository.DefaultUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service
 public class DefaultUserService {
-    private DefaultUserRepository defaultUserRepository;
+
+    private final DefaultUserRepository defaultUserRepository;
 
     @Autowired
     public DefaultUserService(DefaultUserRepository defaultUserRepository) {
@@ -27,8 +27,8 @@ public class DefaultUserService {
         return id;
     }
 
-    public DefaultUser getByUserName(String userName) {
-        return defaultUserRepository.findByUserName(userName);
+    public DefaultUser getByUsername(String userName) {
+        return defaultUserRepository.findByUsername(userName);
     }
 
     public DefaultUser add(NewDefaultUserDto newDefaultUserDto) {

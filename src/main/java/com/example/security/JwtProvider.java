@@ -21,11 +21,11 @@ public class JwtProvider {
     @Value("$(jwt.secret)")
     private String jwtSecret;
 
-    private final AccountDetailsService accountDetailsService;
+    private final CustomUserDetailsService customUserDetailsService;
 
     @Autowired
-    public JwtProvider(AccountDetailsService accountDetailsService) {
-        this.accountDetailsService = accountDetailsService;
+    public JwtProvider(CustomUserDetailsService customUserDetailsService) {
+        this.customUserDetailsService = customUserDetailsService;
     }
 
     @PostConstruct
@@ -62,7 +62,7 @@ public class JwtProvider {
     }
 
     public Authentication getAuthentication(String token) {
-        UserDetails userDetails = this.accountDetailsService.loadUserByUsername(getLoginFromToken(token));
+        UserDetails userDetails = this.customUserDetailsService.loadUserByUsername(getLoginFromToken(token));
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
 

@@ -3,8 +3,8 @@ package com.example.entity;
 import javax.persistence.*;
 
 @Entity
-@Table(name="account")
-public class Account {
+@Table(name="usr")
+public class User {
 
     @Id
     @GeneratedValue
@@ -20,11 +20,7 @@ public class Account {
     @Column(name="role")
     private Role role;
 
-    @OneToOne
-    @JoinColumn(name="user_id")
-    private DefaultUser defaultUser;
-
-    public Account() {}
+    public User() {}
 
     public Long getId() {
         return id;
@@ -57,4 +53,5 @@ public class Account {
     public void setRole(Role role) {
         this.role = role;
     }
+
 }

@@ -37,29 +37,29 @@ public class DefaultUserDto {
         this.cityName = cityName;
     }
 
-    public LocalDate getbDay() {
+    public LocalDate getBDay() {
         return bDay;
     }
 
-    public void setbDay(LocalDate bDay) {
+    public void setBDay(LocalDate bDay) {
         this.bDay = bDay;
     }
 
     public static DefaultUser toEntity(DefaultUserDto defaultUserDto){
         DefaultUser userEntity=new DefaultUser();
-        userEntity.setUserName(defaultUserDto.getUserName());
+        userEntity.setUsername(defaultUserDto.getUserName());
         userEntity.setId(defaultUserDto.getId());
         userEntity.setCityName(defaultUserDto.getCityName());
-        userEntity.setbDay(defaultUserDto.getbDay());
+        userEntity.setBDay(defaultUserDto.getBDay());
         return userEntity;
     }
 
     public static DefaultUserDto toDto(DefaultUser defaultUser){
         DefaultUserDto userDto=new DefaultUserDto();
-        userDto.setUserName(defaultUser.getUserName());
+        userDto.setUserName(defaultUser.getUsername());
         userDto.setId(defaultUser.getId());
         userDto.setCityName(defaultUser.getCityName());
-        userDto.setbDay(defaultUser.getbDay());
+        userDto.setBDay(defaultUser.getBDay());
         return userDto;
     }
 }

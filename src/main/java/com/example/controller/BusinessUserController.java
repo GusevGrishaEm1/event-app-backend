@@ -6,13 +6,12 @@ import com.example.model.businessUser.NewBusinessUserDto;
 import com.example.service.BusinessUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import javax.persistence.Access;
 import java.util.List;
 
 @RestController
 @RequestMapping("/business")
 public class BusinessUserController {
+
     private final BusinessUserService businessUserService;
 
     @Autowired
@@ -28,6 +27,11 @@ public class BusinessUserController {
     @GetMapping
     public List<BusinessUser> getAll(){
         return businessUserService.getAll();
+    }
+
+    @GetMapping("/hi")
+    public String getHI() {
+        return "HI business user";
     }
 
     @PostMapping

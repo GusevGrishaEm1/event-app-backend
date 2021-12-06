@@ -28,6 +28,11 @@ public class DefaultUserController {
     @GetMapping
     public List<DefaultUser> getAll(){return defaultUserService.getAll();}
 
+    @GetMapping("/hi")
+    public String getHI() {
+        return "HI default user";
+    }
+
     @PostMapping
     public DefaultUser add(@RequestBody NewDefaultUserDto newDefaultUser){
         return defaultUserService.add(newDefaultUser);

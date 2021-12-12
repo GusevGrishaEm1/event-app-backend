@@ -1,4 +1,4 @@
-package com.example.model.account;
+package com.example.model.user;
 
 import com.example.entity.User;
 import com.example.entity.Role;

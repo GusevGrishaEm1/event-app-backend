@@ -1,21 +1,14 @@
 package com.example.model.businessUser;
 
 import com.example.entity.BusinessUser;
+import com.example.model.user.UserDto;
 
-public class BusinessUserDto {
-    private Long id;
+public class BusinessUserDto extends UserDto {
+
     private String companyName;
     private String address;
 
     public BusinessUserDto() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getCompanyName() {
@@ -35,18 +28,24 @@ public class BusinessUserDto {
     }
 
     public static BusinessUser toEntity(BusinessUserDto businessUserDto){
-        BusinessUser businessUserEntity=new BusinessUser();
+        BusinessUser businessUserEntity = new BusinessUser();
         businessUserEntity.setId(businessUserDto.getId());
+        businessUserEntity.setLogin(businessUserDto.getLogin());
+        businessUserDto.setPassword(businessUserDto.getPassword());
+        businessUserDto.setRole(businessUserDto.getRole());
         businessUserEntity.setAddress(businessUserDto.getAddress());
         businessUserEntity.setCompanyName(businessUserDto.getCompanyName());
         return businessUserEntity;
     }
 
-    public static BusinessUserDto toDto(BusinessUser businessUser){
-        BusinessUserDto businessUserDto=new BusinessUserDto();
-        businessUserDto.setId(businessUser.getId());
-        businessUserDto.setAddress(businessUser.getAddress());
-        businessUserDto.setCompanyName(businessUser.getCompanyName());
+    public static BusinessUserDto toDto(BusinessUser businessUserEntity){
+        BusinessUserDto businessUserDto = new BusinessUserDto();
+        businessUserDto.setId(businessUserEntity.getId());
+        businessUserDto.setLogin(businessUserEntity.getLogin());
+        businessUserDto.setPassword(businessUserDto.getPassword());
+        businessUserDto.setRole(businessUserDto.getRole());
+        businessUserDto.setAddress(businessUserEntity.getAddress());
+        businessUserDto.setCompanyName(businessUserEntity.getCompanyName());
         return businessUserDto;
     }
 }

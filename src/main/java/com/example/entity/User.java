@@ -4,6 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name="usr")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class User {
 
     @Id
@@ -19,6 +20,13 @@ public class User {
 
     @Column(name="role")
     private Role role;
+
+    public User(Long id, String login, String password, Role role) {
+        this.id = id;
+        this.login = login;
+        this.password = password;
+        this.role = role;
+    }
 
     public User() {}
 

@@ -1,4 +1,4 @@
-package com.example.model.account;
+package com.example.model.user;
 
 import com.example.entity.User;
 import com.example.entity.Role;
@@ -44,6 +44,13 @@ public class UserDto {
     }
 
     public void setRole(Role role) {
+        this.role = role;
+    }
+
+    public UserDto(Long id, String login, String password, Role role) {
+        this.id = id;
+        this.login = login;
+        this.password = password;
         this.role = role;
     }
 

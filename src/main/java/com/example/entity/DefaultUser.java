@@ -4,13 +4,7 @@ import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "defaultUser")
-public class DefaultUser {
-
-    @Id
-    @GeneratedValue
-    @Column(name="id")
-    private Long id;
+public class DefaultUser extends User {
 
     @Column(name = "username")
     private String username;
@@ -21,19 +15,14 @@ public class DefaultUser {
     @Column(name = "bDay")
     private LocalDate bDay;
 
-    @OneToOne
-    @JoinColumn(name = "usr_id", referencedColumnName = "id")
-    private User user;
-
     public DefaultUser() {
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
+    public DefaultUser(Long id, String login, String password, Role role, String username, String cityName, LocalDate bDay) {
+        super(id, login, password, role);
+        this.username = username;
+        this.cityName = cityName;
+        this.bDay = bDay;
     }
 
     public String getUsername() {

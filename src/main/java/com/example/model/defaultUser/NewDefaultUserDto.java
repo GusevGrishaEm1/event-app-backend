@@ -1,15 +1,23 @@
 package com.example.model.defaultUser;
 
 import com.example.entity.DefaultUser;
+import com.example.entity.Role;
+import com.example.model.user.NewUserDto;
+
 import java.time.LocalDate;
 
-public class NewDefaultUserDto {
+public class NewDefaultUserDto extends NewUserDto {
 
-    private  String username;
+    private  final String username;
+    private  final String cityName;
+    private  final LocalDate bDay;
 
-    private  String cityName;
-
-    private  LocalDate bDay;
+    public NewDefaultUserDto(String login, String password, Role role, String username, String cityName, LocalDate bDay) {
+        super(login, password, role);
+        this.username = username;
+        this.cityName = cityName;
+        this.bDay = bDay;
+    }
 
     public String getUsername() {
         return username;
@@ -23,20 +31,11 @@ public class NewDefaultUserDto {
         return bDay;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public void setCityName(String cityName) {
-        this.cityName = cityName;
-    }
-
-    public void setbDay(LocalDate bDay) {
-        this.bDay = bDay;
-    }
-
     public static DefaultUser toEntity(NewDefaultUserDto newDefaultUserDto){
         DefaultUser defaultUserEntity = new DefaultUser();
+        defaultUserEntity.setLogin(newDefaultUserDto.getLogin());
+        defaultUserEntity.setRole(newDefaultUserDto.getRole());
+        defaultUserEntity.setPassword(newDefaultUserDto.getPassword());
         defaultUserEntity.setUsername(newDefaultUserDto.getUsername());
         defaultUserEntity.setBDay(newDefaultUserDto.getBDay());
         defaultUserEntity.setCityName(newDefaultUserDto.getCityName());

@@ -1,12 +1,8 @@
 package com.example.service;
 
 import com.example.entity.User;
-import com.example.entity.Role;
-import com.example.exception.UniqueLoginException;
 import com.example.exception.UserNotFoundException;
-import com.example.model.account.NewUserDto;
-import com.example.model.account.UserDto;
-import com.example.model.auth.AuthDto;
+import com.example.model.user.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -43,25 +39,8 @@ public class UserService {
         }
 
         public User getByLogin(String login) {
-            User user = userRepository.findByLogin(login);
-            if(user != null) {
-                return user;
-            }
-            else {
-                return null;
-            }
+            return userRepository.findByLogin(login);
         }
-
-         public User add(NewUserDto newUserDto) {
-            if(getByLogin(newUserDto.getLogin()) == null) {
-                newUserDto.setPassword(passwordEncoder.encode(newUserDto.getPassword()));
-                User userEntity = NewUserDto.toEntity(newUserDto);
-                return userRepository.save(userEntity);
-            }
-            else {
-                throw new UniqueLoginException("The login is taken");
-            }
-         }
 
          public User update(UserDto userDto) {
              if(getById(userDto.getId()) != null) {
@@ -87,13 +66,4 @@ public class UserService {
             return null;
         }
 
-    public UserDto registerDefaultUser(AuthDto auth) {
-        NewUserDto newAccount = new NewUserDto(auth.getLogin(), auth.getPassword(), Role.USER_DEFAULT);
-        return UserDto.toDto(add(newAccount));
-    }
-
-    public UserDto registerBusinessUser(AuthDto auth) {
-        NewUserDto newAccount = new NewUserDto(auth.getLogin(), auth.getPassword(), Role.USER_BUSINESS);
-        return UserDto.toDto(add(newAccount));
-    }
 }

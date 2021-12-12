@@ -41,7 +41,7 @@ public class BusinessUserController {
 
     @PutMapping
     public BusinessUser update(@RequestBody BusinessUserDto businessUserDto){
-        return businessUserService.upate(businessUserDto);
+        return businessUserService.update(businessUserDto);
     }
 
     @DeleteMapping("/{id}")

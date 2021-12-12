@@ -1,13 +1,16 @@
 package com.example.model.businessUser;
 
 import com.example.entity.BusinessUser;
+import com.example.entity.Role;
+import com.example.model.user.NewUserDto;
 
+public class NewBusinessUserDto extends NewUserDto {
 
-public class NewBusinessUserDto {
-    private String companyName;
-    private String address;
+    private final String companyName;
+    private final String address;
 
-    public NewBusinessUserDto(String companyName, String address) {
+    public NewBusinessUserDto(String login, String password, Role role, String companyName, String address) {
+        super(login, password, role);
         this.companyName = companyName;
         this.address = address;
     }
@@ -16,22 +19,17 @@ public class NewBusinessUserDto {
         return companyName;
     }
 
-    public void setCompanyName(String companyName) {
-        this.companyName = companyName;
-    }
-
     public String getAddress() {
         return address;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
     public static BusinessUser toEntity(NewBusinessUserDto newBusinessUserDto){
-        BusinessUser businessUser=new BusinessUser();
-        businessUser.setCompanyName(newBusinessUserDto.getCompanyName());
-        businessUser.setAddress(newBusinessUserDto.getAddress());
-        return businessUser;
+        BusinessUser businessUserEntity = new BusinessUser();
+        businessUserEntity.setLogin(newBusinessUserDto.getLogin());
+        businessUserEntity.setPassword(newBusinessUserDto.getPassword());
+        businessUserEntity.setRole(newBusinessUserDto.getRole());
+        businessUserEntity.setCompanyName(newBusinessUserDto.getCompanyName());
+        businessUserEntity.setAddress(newBusinessUserDto.getAddress());
+        return businessUserEntity;
     }
 }

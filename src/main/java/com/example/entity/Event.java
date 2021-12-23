@@ -1,21 +1,15 @@
 package com.example.entity;
 
 import javax.persistence.*;
-import java.time.LocalDate;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name="event")
 public class Event {
+
     @Id
     @GeneratedValue
     private Long id;
-
-    @Column(name="startDate")
-    private LocalDate startDate;
-
-    @Column(name = "endDate")
-    private LocalDate endDate;
 
     @Column(name="eventName")
     private String eventName;
@@ -23,37 +17,39 @@ public class Event {
     @Column(name="description")
     private String description;
 
+    @Column(name="startDate")
+    private LocalDateTime startDate;
+
+    @Column(name = "endDate")
+    private LocalDateTime endDate;
+
     @Column(name="likeCounter")
-    private long likeCounter;
+    private Long likeCounter;
 
     @Column(name="ageCensor")
-    private int ageCensor;
+    private Integer ageCensor;
 
+    public Event() {}
 
-    public Event() {
-    }
-
-    public Long getId() {
-        return id;
-    }
+    public Long getId() {return id;}
 
     public void setId(Long id) {
         this.id = id;
     }
 
-    public LocalDate getStartDate() {
+    public LocalDateTime getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(LocalDate startDate) {
+    public void setStartDate(LocalDateTime startDate) {
         this.startDate = startDate;
     }
 
-    public LocalDate getEndDate() {
+    public LocalDateTime getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(LocalDate endDate) {
+    public void setEndDate(LocalDateTime endDate) {
         this.endDate = endDate;
     }
 

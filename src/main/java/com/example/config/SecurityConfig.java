@@ -6,10 +6,12 @@ import com.example.security.JwtProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+
 
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -29,9 +31,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/users/register/*", "/users/login").permitAll()
-                .antMatchers("/default/**").hasAnyAuthority(Role.USER_DEFAULT.name())
-                .antMatchers("/business/**").hasAnyAuthority(Role.USER_BUSINESS.name())
-                .anyRequest().authenticated()
+                .antMatchers(HttpMethod.POST, "/events/").hasAnyAuthority(Role.USER_BUSINESS.name())
+                .antMatchers(HttpMethod.PATCH, "/events/").hasAnyAuthority(Role.USER_BUSINESS.name())
+                .antMatchers(HttpMethod.DELETE, "/events/").hasAnyAuthority(Role.USER_BUSINESS.name())
+                .antMatchers(HttpMethod.GET,"/events/").hasAnyAuthority(Role.USER_DEFAULT.name())
+                .antMatchers(HttpMethod.PATCH,"/events/subscribe").hasAnyAuthority(Role.USER_DEFAULT.name())
+                .antMatchers(HttpMethod.PATCH,"/events/unsubscribe").hasAnyAuthority(Role.USER_DEFAULT.name())
+                .antMatchers(HttpMethod.PATCH,"/events/add/review").hasAnyAuthority(Role.USER_DEFAULT.name())
+                .anyRequest()
+                .authenticated()
                 .and()
                 .apply(new JwtConfigure(jwtProvider));
     }

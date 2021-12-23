@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import java.util.List;
 
 @Service
 public class DefaultUserService {
@@ -28,15 +27,6 @@ public class DefaultUserService {
 
     public DefaultUser getById(Long id) {
         return defaultUserRepository.findById(id).get();
-    }
-
-    public long delete(Long id) {
-        defaultUserRepository.deleteById(id);
-        return id;
-    }
-
-    public DefaultUser getByUsername(String userName) {
-        return defaultUserRepository.findByUsername(userName);
     }
 
     public DefaultUser add(NewDefaultUserDto newDefaultUserDto) {
@@ -57,10 +47,6 @@ public class DefaultUserService {
             // exc
             return null;
         }
-    }
-
-    public List<DefaultUser> getAll() {
-        return defaultUserRepository.findAll();
     }
 
     public DefaultUserDto registerDefaultUser(NewDefaultUserDto newDefaultUserDto) {

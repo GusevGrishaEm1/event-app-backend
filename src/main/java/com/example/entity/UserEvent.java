@@ -1,24 +1,32 @@
 package com.example.entity;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
-@Table(name="user_event")
-public class User_Event {
+@Table(name="usr_event")
+public class UserEvent {
     @Id
     @GeneratedValue
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "usr_id")
     private User user;
 
     @ManyToOne
     @JoinColumn(name = "event_id")
     private Event event;
 
-    public User_Event() {
+    @Column(name = "owner")
+    private Boolean owner;
+
+    @Column(name = "review")
+    private String review;
+
+    @Column(name = "liked")
+    private Boolean liked;
+
+    public UserEvent() {
     }
 
     public Long getId() {
@@ -43,5 +51,21 @@ public class User_Event {
 
     public void setEvent(Event event) {
         this.event = event;
+    }
+
+    public Boolean getOwner() {
+        return owner;
+    }
+
+    public void setOwner(Boolean owner) {
+        this.owner = owner;
+    }
+
+    public String getReview() {
+        return review;
+    }
+
+    public void setReview(String review) {
+        this.review = review;
     }
 }

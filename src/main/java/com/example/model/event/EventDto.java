@@ -1,57 +1,57 @@
 package com.example.model.event;
 
 import com.example.entity.Event;
-import org.apache.tomcat.jni.Local;
-
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class EventDto {
+
     private Long id;
 
-    private LocalDate start;
+    private LocalDateTime startDate;
 
-    private LocalDate end;
+    private LocalDateTime endDate;
 
     private String eventName;
 
     private String description;
 
-    private long likeCounter;
-
     private int ageCensor;
 
-    public EventDto(Long id, LocalDate start, LocalDate end, String eventName, String description, long likeCounter, int ageCensor) {
+    private long likeCounter;
+
+    public EventDto(Long id, LocalDateTime startDate, LocalDateTime endDate, String eventName, String description, long likeCounter, int ageCensor) {
         this.id = id;
-        this.start = start;
-        this.end = end;
+        this.startDate = startDate;
+        this.endDate = endDate;
         this.eventName = eventName;
         this.description = description;
         this.likeCounter = likeCounter;
         this.ageCensor = ageCensor;
     }
 
-    public EventDto() {
-    }
+    public EventDto() {}
 
     public static Event toEntity(EventDto eventDto){
-        Event entity=new Event();
-        entity.setId(eventDto.getId());
-        entity.setStartDate(eventDto.getStart());
-        entity.setEndDate(eventDto.getEnd());
-        entity.setEventName(eventDto.getEventName());
-        entity.setLikeCounter(eventDto.getLikeCounter());
-        entity.setAgeCensor(eventDto.getAgeCensor());
-        return entity;
+        Event eventEntity = new Event();
+        eventEntity.setId(eventDto.getId());
+        eventEntity.setStartDate(eventDto.getStartDate());
+        eventEntity.setEndDate(eventDto.getEndDate());
+        eventEntity.setEventName(eventDto.getEventName());
+        eventEntity.setDescription(eventDto.getDescription());
+        eventEntity.setAgeCensor(eventDto.getAgeCensor());
+        eventEntity.setLikeCounter(eventDto.getLikeCounter());
+        return eventEntity;
     }
 
-    public static EventDto toModel(Event event){
-        EventDto eventDto=new EventDto();
-        eventDto.setId(event.getId());
-        eventDto.setStart(event.getStartDate());
-        eventDto.setEnd(event.getEndDate());
-        eventDto.setEventName(event.getEventName());
-        eventDto.setLikeCounter(event.getLikeCounter());
-        eventDto.setAgeCensor(event.getAgeCensor());
+    public static EventDto toDto(Event eventEntity){
+        EventDto eventDto = new EventDto();
+        eventDto.setId(eventEntity.getId());
+        eventDto.setStartDate(eventEntity.getStartDate());
+        eventDto.setEndDate(eventEntity.getEndDate());
+        eventDto.setEventName(eventEntity.getEventName());
+        eventDto.setDescription(eventEntity.getDescription());
+        eventDto.setAgeCensor(eventEntity.getAgeCensor());
+        eventDto.setLikeCounter(eventEntity.getLikeCounter());
         return eventDto;
     }
 
@@ -63,20 +63,20 @@ public class EventDto {
         this.id = id;
     }
 
-    public LocalDate getStart() {
-        return start;
+    public LocalDateTime getStartDate() {
+        return startDate;
     }
 
-    public void setStart(LocalDate start) {
-        this.start = start;
+    public void setStartDate(LocalDateTime startDate) {
+        this.startDate = startDate;
     }
 
-    public LocalDate getEnd() {
-        return end;
+    public LocalDateTime getEndDate() {
+        return endDate;
     }
 
-    public void setEnd(LocalDate end) {
-        this.end = end;
+    public void setEndDate(LocalDateTime endDate) {
+        this.endDate = endDate;
     }
 
     public String getEventName() {

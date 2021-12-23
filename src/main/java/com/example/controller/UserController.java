@@ -1,13 +1,12 @@
 package com.example.controller;
 
-import com.example.exception.LoginUserException;
+import com.example.exception.UserNotFoundException;
 import com.example.model.auth.AuthDto;
 import com.example.model.businessUser.BusinessUserDto;
 import com.example.model.businessUser.NewBusinessUserDto;
 import com.example.model.defaultUser.DefaultUserDto;
 import com.example.model.defaultUser.NewDefaultUserDto;
 import com.example.security.JwtProvider;
-import com.example.entity.User;
 import com.example.model.user.UserDto;
 import com.example.service.BusinessUserService;
 import com.example.service.DefaultUserService;
@@ -16,7 +15,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.example.service.UserService;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -36,26 +34,6 @@ public class UserController {
         this.jwtProvider = jwtProvider;
     }
 
-    @GetMapping("/{id}")
-    public User getById(@PathVariable Long id) {
-        return userService.getById(id);
-    }
-
-    @GetMapping()
-    public List<UserDto> getAll() {
-        return userService.getAll();
-    }
-
-    @PatchMapping
-    public User update(@RequestBody UserDto account) {
-        return userService.update(account);
-    }
-
-    @DeleteMapping("/{id}")
-    public Long delete(@PathVariable Long id) {
-        return userService.delete(id);
-    }
-
     @PostMapping("/register/default")
     public DefaultUserDto registerDefaultUser(@RequestBody NewDefaultUserDto newDefaultUser) {
         return defaultUserService.registerDefaultUser(newDefaultUser);
@@ -68,11 +46,11 @@ public class UserController {
 
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody AuthDto auth) {
-        User user = userService.findByLoginAndPassword(auth.getLogin(), auth.getPassword());
-        if(user ==null) {
-            throw new LoginUserException("Login exception");
+        UserDto user = userService.findByLoginAndPassword(auth.getLogin(), auth.getPassword());
+        if(user == null) {
+            throw new UserNotFoundException("User not found!");
         }
-        String token = jwtProvider.generateToken(user.getLogin(), user.getRole());
+        String token = jwtProvider.generateToken(user.getId(), user.getLogin(), user.getRole());
         Map<Object, Object> response = new HashMap<>();
         response.put("login", user.getLogin());
         response.put("role", user.getRole());

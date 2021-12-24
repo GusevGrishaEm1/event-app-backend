@@ -89,6 +89,7 @@ public class EventService {
         UserEvent userEvent = userEventService.getByUserAndEvent(userEntity, eventEntity);
         if(!userEvent.getOwner()) {
             userEvent.setReview(review);
+            userEventService.update(userEvent);
             return UserEventDto.toDto(userEvent);
         }
         else {

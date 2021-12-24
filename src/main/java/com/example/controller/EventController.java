@@ -73,7 +73,7 @@ public class EventController {
     }
 
     @PutMapping("/add/review")
-    public UserEventDto addReview(@PathParam("eventId") Long eventId, @RequestBody String review, @RequestHeader("Authorization") String token) {
+    public UserEventDto addReview(@PathParam("eventId") Long eventId, @PathParam("review") String review, @RequestHeader("Authorization") String token) {
         String stillToken = jwtProvider.resolveToken(token);
         return eventService.addReview(eventId, review, jwtProvider.getIdFromToken(stillToken));
     }

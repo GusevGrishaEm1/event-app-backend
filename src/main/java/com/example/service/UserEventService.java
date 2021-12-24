@@ -24,7 +24,9 @@ public class UserEventService {
         userEventRepository.deleteById(id);
         return id;
     }
-
+    public UserEvent update(UserEvent userEvent) {
+        return userEventRepository.save(userEvent);
+    }
     public UserEvent getByUserAndEvent(User user, Event event) {
         return userEventRepository.findByUserAndEvent(user, event);
     }

@@ -61,6 +61,14 @@ public class UserEvent {
         this.owner = owner;
     }
 
+    public Boolean getLiked() {
+        return liked;
+    }
+
+    public void setLiked(Boolean liked) {
+        this.liked = liked;
+    }
+
     public String getReview() {
         return review;
     }

@@ -3,6 +3,8 @@ package com.example.service;
 import com.example.entity.Event;
 import com.example.entity.User;
 import com.example.entity.UserEvent;
+import com.example.exception.EventNotFoundException;
+import com.example.exception.UserAccessException;
 import com.example.model.event.EventDto;
 import com.example.model.event.NewEventDto;
 import com.example.model.user_event.UserEventDto;
@@ -38,6 +40,31 @@ public class EventService {
         return EventDto.toDto(eventEntity);
     }
 
+    public Long delete(Long id, Long userId) {
+        User userEntity = userService.getById(userId);
+        Event eventEntity = getById(id);
+        UserEvent userEvent = userEventService.getByUserAndEvent(userEntity, eventEntity);
+        if(userEvent.getOwner()) {
+            eventRepository.deleteById(id);
+            return id;
+        }
+        else {
+            throw new UserAccessException("User access exception.");
+        }
+    }
+
+    public EventDto update(EventDto eventDto, Long userId) {
+        User userEntity = userService.getById(userId);
+        Event eventEntity = EventDto.toEntity(eventDto);
+        UserEvent userEvent = userEventService.getByUserAndEvent(userEntity, eventEntity);
+        if(userEvent.getOwner()) {
+            return EventDto.toDto(eventRepository.save(eventEntity));
+        }
+        else {
+            throw new UserAccessException("User access exception.");
+        }
+    }
+
     public EventDto subscribe(Long eventId, Long userId) {
         Event eventEntity = getById(eventId);
         User userEntity = userService.getById(userId);
@@ -60,40 +87,19 @@ public class EventService {
         Event eventEntity = getById(eventId);
         User userEntity = userService.getById(userId);
         UserEvent userEvent = userEventService.getByUserAndEvent(userEntity, eventEntity);
-        userEvent.setReview(review);
-        return null;
-    }
-
-
-    public Long delete(Long id, Long userId) {
-        User userEntity = userService.getById(userId);
-        Event eventEntity = getById(id);
-        UserEvent userEvent = userEventService.getByUserAndEvent(userEntity, eventEntity);
-        if(userEvent.getOwner()) {
-            eventRepository.deleteById(id);
-            return id;
+        if(!userEvent.getOwner()) {
+            userEvent.setReview(review);
+            return UserEventDto.toDto(userEvent);
         }
         else {
-            //throw access exception
+            throw new UserAccessException("User access exception.");
         }
-        return null;
     }
 
-    public EventDto update(EventDto eventDto, Long userId) {
-        User userEntity = userService.getById(userId);
-        Event eventEntity = EventDto.toEntity(eventDto);
-        UserEvent userEvent = userEventService.getByUserAndEvent(userEntity, eventEntity);
-        if(userEvent.getOwner()) {
-            return EventDto.toDto(eventRepository.save(eventEntity));
-        }
-        else {
-            //throw access exception
-        }
-        return null;
-    }
-
-    public Event getById(Long id){
-        return eventRepository.getById(id);
+    public Event getById(Long id) {
+        Event event = eventRepository.getById(id);
+        if(event!=null) return event;
+        else throw new EventNotFoundException("Event not found.");
     }
 
     public List<EventDto> getAll() {

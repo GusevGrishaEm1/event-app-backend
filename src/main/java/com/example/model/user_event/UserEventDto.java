@@ -1,21 +1,20 @@
 package com.example.model.user_event;
 
-import com.example.entity.Event;
-import com.example.entity.User;
+import com.example.entity.UserEvent;
 
 public class UserEventDto {
 
     private Long id;
 
-    private User user;
+    private Long userId;
 
-    private Event event;
+    private Long eventId;
 
-    public UserEventDto(Long id, User user, Event event) {
-        this.id = id;
-        this.user = user;
-        this.event = event;
-    }
+    private String review;
+
+    private Boolean liked;
+
+    private Boolean owner;
 
     public Long getId() {
         return id;
@@ -25,19 +24,53 @@ public class UserEventDto {
         this.id = id;
     }
 
-    public User getUser() {
-        return user;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
-    public Event getEvent() {
-        return event;
+    public Long getEventId() {
+        return eventId;
     }
 
-    public void setEvent(Event event) {
-        this.event = event;
+    public void setEventId(Long eventId) {
+        this.eventId = eventId;
+    }
+
+    public String getReview() {
+        return review;
+    }
+
+    public void setReview(String review) {
+        this.review = review;
+    }
+
+    public Boolean getLiked() {
+        return liked;
+    }
+
+    public void setLiked(Boolean liked) {
+        this.liked = liked;
+    }
+
+    public Boolean getOwner() {
+        return owner;
+    }
+
+    public void setOwner(Boolean owner) {
+        this.owner = owner;
+    }
+
+    public static UserEventDto toDto(UserEvent userEventEntity) {
+        UserEventDto userEventDto = new UserEventDto();
+        userEventDto.setUserId(userEventEntity.getUser().getId());
+        userEventDto.setEventId(userEventEntity.getEvent().getId());
+        userEventDto.setOwner(userEventEntity.getOwner());
+        userEventDto.setReview(userEventEntity.getReview());
+        userEventDto.setLiked(userEventEntity.getLiked());
+        return userEventDto;
     }
 }

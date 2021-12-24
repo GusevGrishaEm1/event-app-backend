@@ -6,5 +6,4 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface DefaultUserRepository extends JpaRepository<DefaultUser, Long> {
-    DefaultUser findByUsername(String userName);
 }

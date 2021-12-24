@@ -1,25 +1,23 @@
 package com.example.model.event;
 
-
 import com.example.entity.Event;
-
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class NewEventDto {
 
-    private LocalDate startDate;
+    private LocalDateTime startDate;
 
-    private LocalDate endDate;
+    private LocalDateTime endDate;
 
     private String eventName;
 
     private String description;
 
-    private long likeCounter;
-
     private int ageCensor;
 
-    public NewEventDto(LocalDate startDate, LocalDate endDate, String eventName, String description, long likeCounter, int ageCensor) {
+    private long likeCounter;
+
+    public NewEventDto(LocalDateTime startDate, LocalDateTime endDate, String eventName, String description, long likeCounter, int ageCensor) {
         this.startDate = startDate;
         this.endDate = endDate;
         this.eventName = eventName;
@@ -39,51 +37,28 @@ public class NewEventDto {
         return entity;
     }
 
-    public LocalDate getStartDate() {
+    public LocalDateTime getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(LocalDate startDate) {
-        this.startDate = startDate;
-    }
-
-    public LocalDate getEndDate() {
+    public LocalDateTime getEndDate() {
         return endDate;
-    }
-
-    public void setEndDate(LocalDate endDate) {
-        this.endDate = endDate;
     }
 
     public String getEventName() {
         return eventName;
     }
 
-    public void setEventName(String eventName) {
-        this.eventName = eventName;
-    }
-
     public String getDescription() {
         return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public long getLikeCounter() {
         return likeCounter;
     }
 
-    public void setLikeCounter(long likeCounter) {
-        this.likeCounter = likeCounter;
-    }
-
     public int getAgeCensor() {
         return ageCensor;
     }
 
-    public void setAgeCensor(int ageCensor) {
-        this.ageCensor = ageCensor;
-    }
 }

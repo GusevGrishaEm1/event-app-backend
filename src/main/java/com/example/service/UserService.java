@@ -8,9 +8,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.example.repository.UserRepository;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -25,17 +22,11 @@ public class UserService {
     }
 
         public User getById(Long id) {
-             Optional<User> optionalUser =  userRepository.findById(id);
-             User user = optionalUser.orElse(null);
-             if(user==null) {
+             User userEntity =  userRepository.getById(id);
+             if(userEntity == null) {
                  throw new UserNotFoundException("User with id {" + id + "} not found");
              }
-             return user;
-        }
-
-        public Long delete(Long id) {
-            userRepository.deleteById(id);
-            return id;
+             return userEntity;
         }
 
         public User getByLogin(String login) {
@@ -52,18 +43,13 @@ public class UserService {
              }
          }
 
-         public List<UserDto> getAll() {
-             return userRepository.findAll().stream().map(UserDto::toDto).collect(Collectors.toList());
-         }
-
-        public User findByLoginAndPassword(String login, String password) {
+        public UserDto findByLoginAndPassword(String login, String password) {
             User user = getByLogin(login);
             if (user != null) {
                 if (passwordEncoder.matches(password, user.getPassword())) {
-                    return user;
+                    return UserDto.toDto(user);
                 }
             }
             return null;
         }
-
 }

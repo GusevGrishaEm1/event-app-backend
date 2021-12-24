@@ -33,9 +33,10 @@ public class JwtProvider {
         jwtSecret = Base64.getEncoder().encodeToString(jwtSecret.getBytes());
     }
 
-    public String generateToken(String login, Role role) {
+    public String generateToken(Long id, String login, Role role) {
         Claims claims = Jwts.claims().setSubject(login);
         claims.put("roles", getRoleNames(role));
+        claims.put("id", id);
         Date now = new Date();
         Date date = new Date(now.getTime() + 120000);
         return Jwts.builder()
@@ -61,13 +62,18 @@ public class JwtProvider {
         return claims.getSubject();
     }
 
+    public Long getIdFromToken(String token) {
+        Claims claims = Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody();
+        return claims.get("id", Long.class);
+    }
+
     public Authentication getAuthentication(String token) {
         UserDetails userDetails = this.customUserDetailsService.loadUserByUsername(getLoginFromToken(token));
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
 
-    public String resolveToken(HttpServletRequest req) {
-        String bearerToken = req.getHeader("Authorization");
+    public String resolveToken(String bearerToken) {
+        //String bearerToken = req.getHeader("Authorization");
         if (bearerToken != null && bearerToken.startsWith("Bearer")) {
             return bearerToken.substring(7);
         }

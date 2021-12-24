@@ -35,12 +35,6 @@ public class BusinessUserService {
         return id;
     }
 
-    public BusinessUser getByCompanyName(String companyName){
-        return businessUserRepository.findByCompanyName(companyName);
-    }
-
-
-
     public BusinessUser add(NewBusinessUserDto newBusinessUserDto) {
         if(userService.getByLogin(newBusinessUserDto.getLogin()) == null) {
             newBusinessUserDto.setPassword(passwordEncoder.encode(newBusinessUserDto.getPassword()));
@@ -59,11 +53,6 @@ public class BusinessUserService {
             return null;
         }
     }
-
-    public List<BusinessUser> getAll(){
-        return businessUserRepository.findAll();
-    }
-
 
     public BusinessUserDto registerBusinessUser(NewBusinessUserDto newBusinessUserDto) {
         newBusinessUserDto.setRole(Role.USER_BUSINESS);

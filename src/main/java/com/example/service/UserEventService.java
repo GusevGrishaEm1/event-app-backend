@@ -7,6 +7,8 @@ import com.example.repository.UserEventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserEventService {
     private final UserEventRepository userEventRepository;
@@ -29,5 +31,9 @@ public class UserEventService {
     }
     public UserEvent getByUserAndEvent(User user, Event event) {
         return userEventRepository.findByUserAndEvent(user, event);
+    }
+
+    public List<UserEvent> getEventsByUserId(Long userId){
+        return userEventRepository.findUserEventsByUser_Id(userId);
     }
 }

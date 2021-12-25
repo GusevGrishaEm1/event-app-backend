@@ -1,12 +1,16 @@
 package com.example.controller;
 
+import com.example.exception.ExpirationTokenException;
 import com.example.model.event.EventDto;
 import com.example.model.event.NewEventDto;
-import com.example.model.user_event.UserEventDto;
+import com.example.model.userEvent.UserEventDto;
 import com.example.security.JwtProvider;
 import com.example.service.EventService;
+import com.example.service.UserEventService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import javax.websocket.server.PathParam;
 import java.util.List;
 
@@ -24,8 +28,8 @@ public class EventController {
     }
 
     @GetMapping
-    public List<EventDto> getAll() {
-        return eventService.getAll();
+    public List<EventDto> getAllByUserId(@RequestHeader("Authorization") String token) {
+        return eventService.getAllByUserId(jwtProvider.getIdFromToken(jwtProvider.resolveToken(token)));
     }
 
     @PutMapping
@@ -46,20 +50,6 @@ public class EventController {
         return eventService.add(event, jwtProvider.getIdFromToken(stillToken));
     }
 
-    /*
-    @PostMapping("/{id}/newEvent")
-    public ResponseEntity addEvent(@RequestBody NewEventDto newEventDto, @RequestParam Long userId) {
-        if (businessUserService.getById(id) != null) {
-            EventDto event = eventService.add(newEventDto);
-            UserEvent user_event = userEventService.add(new NewUserEventDto(id, event.getId()));
-            if(user_event!=null)
-            return ResponseEntity.ok("Success");
-            else return ResponseEntity.badRequest().body("Failed to create new Event");
-        }
-        return ResponseEntity.badRequest().body("User with id: " + id + "not found");
-    }
-    */
-
     @PutMapping("/subscribe")
     public EventDto subscribe(@PathParam("eventId") Long eventId, @RequestHeader("Authorization") String token) {
         String stillToken = jwtProvider.resolveToken(token);
@@ -77,6 +67,4 @@ public class EventController {
         String stillToken = jwtProvider.resolveToken(token);
         return eventService.addReview(eventId, review, jwtProvider.getIdFromToken(stillToken));
     }
-
-
 }

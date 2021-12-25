@@ -3,11 +3,11 @@ package com.example.service;
 import com.example.entity.User;
 import com.example.exception.UserNotFoundException;
 import com.example.model.user.UserDto;
+import com.example.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import com.example.repository.UserRepository;
 
 @Service
 public class UserService {
@@ -21,35 +21,29 @@ public class UserService {
         this.passwordEncoder = new BCryptPasswordEncoder();
     }
 
-        public User getById(Long id) {
-             User userEntity =  userRepository.getById(id);
-             if(userEntity == null) {
-                 throw new UserNotFoundException("User with id {" + id + "} not found");
-             }
-             return userEntity;
-        }
+    public User getById(Long id) {
+        return userRepository.getById(id);
+    }
 
-        public User getByLogin(String login) {
-            return userRepository.findByLogin(login);
-        }
+    public User getByLogin(String login) {
+        return userRepository.findByLogin(login);
+    }
 
-         public User update(UserDto userDto) {
-             if(getById(userDto.getId()) != null) {
-                 User userEntity = UserDto.toEntity(userDto);
-                 return userRepository.save(userEntity);
-             }
-             else {
-                 throw new UserNotFoundException("User with id {" + userDto.getId() + "} not found");
-             }
-         }
+    public User update(UserDto userDto) {
+        if (getById(userDto.getId()) == null) throw new UserNotFoundException("User not found");
+        User userEntity = UserDto.toEntity(userDto);
+        return userRepository.save(userEntity);
+    }
 
-        public UserDto findByLoginAndPassword(String login, String password) {
-            User user = getByLogin(login);
-            if (user != null) {
-                if (passwordEncoder.matches(password, user.getPassword())) {
-                    return UserDto.toDto(user);
-                }
+    public UserDto findByLoginAndPassword(String login, String password) {
+        User user = getByLogin(login);
+        if (user != null) {
+            if (passwordEncoder.matches(password, user.getPassword())) {
+                return UserDto.toDto(user);
             }
-            return null;
         }
+        return null;
+    }
+
+
 }

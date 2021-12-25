@@ -3,6 +3,7 @@ package com.example.service;
 import com.example.entity.DefaultUser;
 import com.example.entity.Role;
 import com.example.exception.UniqueLoginException;
+import com.example.exception.UserNotFoundException;
 import com.example.model.defaultUser.DefaultUserDto;
 import com.example.model.defaultUser.NewDefaultUserDto;
 import com.example.repository.DefaultUserRepository;
@@ -30,23 +31,17 @@ public class DefaultUserService {
     }
 
     public DefaultUser add(NewDefaultUserDto newDefaultUserDto) {
-        if(userService.getByLogin(newDefaultUserDto.getLogin()) == null) {
-            newDefaultUserDto.setPassword(passwordEncoder.encode(newDefaultUserDto.getPassword()));
-            DefaultUser defaultUserEntity = NewDefaultUserDto.toEntity(newDefaultUserDto);
-            return defaultUserRepository.save(defaultUserEntity);
-        }
-        else {
+        if (userService.getByLogin(newDefaultUserDto.getLogin()) != null)
             throw new UniqueLoginException("The login is taken");
-        }
+        newDefaultUserDto.setPassword(passwordEncoder.encode(newDefaultUserDto.getPassword()));
+        DefaultUser defaultUserEntity = NewDefaultUserDto.toEntity(newDefaultUserDto);
+        return defaultUserRepository.save(defaultUserEntity);
     }
 
     public DefaultUser update(DefaultUserDto defaultUserDto) {
-        if (getById(defaultUserDto.getId()) != null) {
-            return DefaultUserDto.toEntity(defaultUserDto);
-        } else {
-            // exc
-            return null;
-        }
+        if (getById(defaultUserDto.getId()) == null) throw new UserNotFoundException("User not found");
+        if(userService.getByLogin(defaultUserDto.getLogin())!=null) throw new UniqueLoginException("This login is already taken");
+        return DefaultUserDto.toEntity(defaultUserDto);
     }
 
     public DefaultUserDto registerDefaultUser(NewDefaultUserDto newDefaultUserDto) {

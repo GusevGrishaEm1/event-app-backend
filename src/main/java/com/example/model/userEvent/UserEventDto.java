@@ -1,4 +1,4 @@
-package com.example.model.user_event;
+package com.example.model.userEvent;
 
 import com.example.entity.UserEvent;
 

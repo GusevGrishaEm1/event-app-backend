@@ -3,6 +3,7 @@ package com.example.service;
 import com.example.entity.BusinessUser;
 import com.example.entity.Role;
 import com.example.exception.UniqueLoginException;
+import com.example.exception.UserNotFoundException;
 import com.example.model.businessUser.BusinessUserDto;
 import com.example.model.businessUser.NewBusinessUserDto;
 import com.example.repository.BusinessUserRepository;
@@ -10,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import java.util.List;
 
 @Service
 public class BusinessUserService {
@@ -26,32 +26,21 @@ public class BusinessUserService {
         this.userService = userService;
     }
 
-    public BusinessUser getById(Long id){
+    public BusinessUser getById(Long id) {
         return businessUserRepository.findById(id).get();
     }
 
-    public long delete(Long id){
-        businessUserRepository.deleteById(id);
-        return id;
-    }
-
     public BusinessUser add(NewBusinessUserDto newBusinessUserDto) {
-        if(userService.getByLogin(newBusinessUserDto.getLogin()) == null) {
-            newBusinessUserDto.setPassword(passwordEncoder.encode(newBusinessUserDto.getPassword()));
-            BusinessUser businessUserEntity = NewBusinessUserDto.toEntity(newBusinessUserDto);
-            return businessUserRepository.save(businessUserEntity);
-        }
-        else {
+        if (userService.getByLogin(newBusinessUserDto.getLogin()) != null)
             throw new UniqueLoginException("The login is taken");
-        }
+        newBusinessUserDto.setPassword(passwordEncoder.encode(newBusinessUserDto.getPassword()));
+        return businessUserRepository.save(NewBusinessUserDto.toEntity(newBusinessUserDto));
     }
 
-    public BusinessUser update(BusinessUserDto businessUserDto){
-        if(getById(businessUserDto.getId())!=null){return  businessUserDto.toEntity(businessUserDto);}
-        else {
-            //write exc
-            return null;
-        }
+    public BusinessUser update(BusinessUserDto businessUserDto) {
+        if (getById(businessUserDto.getId()) == null) throw new UserNotFoundException("User not found");
+        if(userService.getByLogin(businessUserDto.getLogin())!=null) throw new UniqueLoginException("This login is already taken");
+        return businessUserDto.toEntity(businessUserDto);
     }
 
     public BusinessUserDto registerBusinessUser(NewBusinessUserDto newBusinessUserDto) {

@@ -6,8 +6,11 @@ import com.example.entity.UserEvent;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface UserEventRepository extends JpaRepository<UserEvent, Long> {
     UserEvent findByUserAndEvent(User user, Event event);
     UserEvent findByEventAndOwner(Event event, Boolean owner);
+    List<UserEvent> findUserEventsByUser_Id(Long id);
 }

@@ -29,7 +29,7 @@ public class UserService {
         return userRepository.findByLogin(login);
     }
 
-    public User update(UserDto userDto) {
+    public User update(UserDto userDto) throws UserNotFoundException {
         if (getById(userDto.getId()) == null) throw new UserNotFoundException("User not found");
         User userEntity = UserDto.toEntity(userDto);
         return userRepository.save(userEntity);
@@ -42,7 +42,7 @@ public class UserService {
                 return UserDto.toDto(user);
             }
         }
-        return null;
+        throw new UserNotFoundException("Incorrect data has been entered or there is no such user");
     }
 
 

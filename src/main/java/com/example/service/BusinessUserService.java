@@ -7,6 +7,8 @@ import com.example.exception.UserNotFoundException;
 import com.example.model.businessUser.BusinessUserDto;
 import com.example.model.businessUser.NewBusinessUserDto;
 import com.example.repository.BusinessUserRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -18,6 +20,7 @@ public class BusinessUserService {
     private final BusinessUserRepository businessUserRepository;
     private final PasswordEncoder passwordEncoder;
     private final UserService userService;
+    private static final Logger LOGGER = LoggerFactory.getLogger(DefaultUserService.class);
 
     @Autowired
     public BusinessUserService(BusinessUserRepository businessUserRepository, UserService userService) {
@@ -34,7 +37,9 @@ public class BusinessUserService {
         if (userService.getByLogin(newBusinessUserDto.getLogin()) != null)
             throw new UniqueLoginException("The login is taken");
         newBusinessUserDto.setPassword(passwordEncoder.encode(newBusinessUserDto.getPassword()));
-        return businessUserRepository.save(NewBusinessUserDto.toEntity(newBusinessUserDto));
+        BusinessUser businessUserEntity = NewBusinessUserDto.toEntity(newBusinessUserDto);
+        LOGGER.info("Register business user: " + businessUserEntity);
+        return businessUserRepository.save(businessUserEntity);
     }
 
     public BusinessUser update(BusinessUserDto businessUserDto) {

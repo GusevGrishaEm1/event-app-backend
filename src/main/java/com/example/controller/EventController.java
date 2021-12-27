@@ -1,16 +1,12 @@
 package com.example.controller;
 
-import com.example.exception.ExpirationTokenException;
 import com.example.model.event.EventDto;
 import com.example.model.event.NewEventDto;
 import com.example.model.userEvent.UserEventDto;
 import com.example.security.JwtProvider;
 import com.example.service.EventService;
-import com.example.service.UserEventService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import javax.websocket.server.PathParam;
 import java.util.List;
 
@@ -63,7 +59,10 @@ public class EventController {
     }
 
     @PutMapping("/add/review")
-    public UserEventDto addReview(@PathParam("eventId") Long eventId, @PathParam("review") String review, @RequestHeader("Authorization") String token) {
+    public UserEventDto addReview(@PathParam("eventId") Long eventId,
+                                  @PathParam("review") String review,
+                                  @RequestHeader("Authorization") String token)
+    {
         String stillToken = jwtProvider.resolveToken(token);
         return eventService.addReview(eventId, review, jwtProvider.getIdFromToken(stillToken));
     }

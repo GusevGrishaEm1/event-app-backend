@@ -7,6 +7,8 @@ import com.example.exception.UserNotFoundException;
 import com.example.model.defaultUser.DefaultUserDto;
 import com.example.model.defaultUser.NewDefaultUserDto;
 import com.example.repository.DefaultUserRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -18,6 +20,7 @@ public class DefaultUserService {
     private final DefaultUserRepository defaultUserRepository;
     private final UserService userService;
     private final PasswordEncoder passwordEncoder;
+    private static final Logger LOGGER = LoggerFactory.getLogger(DefaultUserService.class);
 
     @Autowired
     public DefaultUserService(DefaultUserRepository defaultUserRepository, UserService userService) {
@@ -35,6 +38,7 @@ public class DefaultUserService {
             throw new UniqueLoginException("The login is taken");
         newDefaultUserDto.setPassword(passwordEncoder.encode(newDefaultUserDto.getPassword()));
         DefaultUser defaultUserEntity = NewDefaultUserDto.toEntity(newDefaultUserDto);
+        LOGGER.info("Register default user: " + defaultUserEntity);
         return defaultUserRepository.save(defaultUserEntity);
     }
 

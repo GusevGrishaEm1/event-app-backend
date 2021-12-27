@@ -1,6 +1,7 @@
 package com.example.security;
 
 import com.example.entity.Role;
+import com.example.exception.ExpirationTokenException;
 import io.jsonwebtoken.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -47,13 +48,8 @@ public class JwtProvider {
     }
 
     public boolean validateToken(String token) {
-        try {
             Jws<Claims> claims = Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token);
-            return !claims.getBody().getExpiration().before(new Date());
-        } catch (ExpiredJwtException | UnsupportedJwtException | MalformedJwtException | SignatureException e) {
-            System.out.println(e.getMessage());
-        }
-        return false;
+             return !claims.getBody().getExpiration().before(new Date());
     }
 
     public String getLoginFromToken(String token) {

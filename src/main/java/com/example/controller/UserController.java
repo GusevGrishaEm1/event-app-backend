@@ -26,6 +26,8 @@ public class UserController {
     private final DefaultUserService defaultUserService;
     private final JwtProvider jwtProvider;
 
+
+
     @Autowired
     public UserController(UserService userService, BusinessUserService businessUserService, DefaultUserService defaultUserService, JwtProvider jwtProvider) {
         this.userService = userService;
@@ -47,14 +49,11 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody AuthDto auth) {
         UserDto user = userService.findByLoginAndPassword(auth.getLogin(), auth.getPassword());
-        if (user==null) throw new UserNotFoundException("Incorrect data has been entered or there is no such user");
         String token = jwtProvider.generateToken(user.getId(), user.getLogin(), user.getRole());
-
         Map<Object, Object> response = new HashMap<>();
         response.put("login", user.getLogin());
         response.put("role", user.getRole());
         response.put("token", token);
-
         return ResponseEntity.ok(response);
     }
 }

@@ -6,6 +6,7 @@ import com.example.entity.UserEvent;
 import com.example.repository.UserEventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import java.util.List;
 
 import java.util.List;
 
@@ -35,5 +36,8 @@ public class UserEventService {
 
     public List<UserEvent> getEventsByUserId(Long userId){
         return userEventRepository.findUserEventsByUser_Id(userId);
+    }
+    public List<UserEvent> getByEvent(Event event) {
+        return userEventRepository.findByEvent(event);
     }
 }

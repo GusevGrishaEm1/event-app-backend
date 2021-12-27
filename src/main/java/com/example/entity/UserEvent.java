@@ -76,4 +76,16 @@ public class UserEvent {
     public void setReview(String review) {
         this.review = review;
     }
+
+    @Override
+    public String toString() {
+        return "UserEvent{" +
+                "id=" + id +
+                ", user=" + user +
+                ", event=" + event +
+                ", owner=" + owner +
+                ", review='" + review + '\'' +
+                ", liked=" + liked +
+                '}';
+    }
 }

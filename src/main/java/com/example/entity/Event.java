@@ -84,4 +84,17 @@ public class Event {
     public void setAgeCensor(int ageCensor) {
         this.ageCensor = ageCensor;
     }
+
+    @Override
+    public String toString() {
+        return "Event{" +
+                "id=" + id +
+                ", eventName='" + eventName + '\'' +
+                ", description='" + description + '\'' +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                ", likeCounter=" + likeCounter +
+                ", ageCensor=" + ageCensor +
+                '}';
+    }
 }

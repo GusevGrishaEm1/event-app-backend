@@ -3,7 +3,6 @@ package com.example.model.defaultUser;
 import com.example.entity.DefaultUser;
 import com.example.entity.Role;
 import com.example.model.user.NewUserDto;
-
 import java.time.LocalDate;
 
 public class NewDefaultUserDto extends NewUserDto {

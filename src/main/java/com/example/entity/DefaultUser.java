@@ -49,4 +49,12 @@ public class DefaultUser extends User {
         this.bDay = bDay;
     }
 
+    @Override
+    public String toString() {
+        return "DefaultUser{" +
+                "username='" + username + '\'' +
+                ", cityName='" + cityName + '\'' +
+                ", bDay=" + bDay +
+                '}';
+    }
 }

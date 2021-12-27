@@ -12,7 +12,6 @@ import com.example.model.userEvent.UserEventDto;
 import com.example.repository.EventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -50,7 +49,8 @@ public class EventService {
         if(eventEntity==null) throw new EventNotFoundException("Event not found");
         UserEvent userEvent = userEventService.getByUserAndEvent(userEntity, eventEntity);
         if (userEvent == null) throw new UserAccessException("User access exception.");
-        userEventService.delete(userEvent.getId());
+        List<UserEvent> userEvents = userEventService.getByEvent(eventEntity);
+        userEvents.forEach(p -> userEventService.delete(p.getId()));
         eventRepository.deleteById(id);
         return id;
     }
@@ -67,12 +67,15 @@ public class EventService {
     public EventDto subscribe(Long eventId, Long userId) {
         Event eventEntity = getById(eventId);
         User userEntity = userService.getById(userId);
-        UserEvent userEvent = new UserEvent();
-        userEvent.setEvent(eventEntity);
-        userEvent.setUser(userEntity);
-        userEvent.setOwner(false);
-        userEventService.add(userEvent);
-        return EventDto.toDto(eventEntity);
+        if(userEventService.getByUserAndEvent(userEntity, eventEntity)==null) {
+            UserEvent userEvent = new UserEvent();
+            userEvent.setEvent(eventEntity);
+            userEvent.setUser(userEntity);
+            userEvent.setOwner(false);
+            userEventService.add(userEvent);
+            return EventDto.toDto(eventEntity);
+        }
+        return null;
     }
 
     public Long unsubscribe(Long eventId, Long userId) {
@@ -86,18 +89,19 @@ public class EventService {
         Event eventEntity = getById(eventId);
         User userEntity = userService.getById(userId);
         UserEvent userEvent = userEventService.getByUserAndEvent(userEntity, eventEntity);
-        if (!userEvent.getOwner()) {
+        if(!userEvent.getOwner()) {
             userEvent.setReview(review);
             userEventService.update(userEvent);
             return UserEventDto.toDto(userEvent);
-        } else {
+        }
+        else {
             throw new UserAccessException("User access exception.");
         }
     }
 
     public Event getById(Long id) {
         Event event = eventRepository.getById(id);
-        if (event != null) return event;
+        if(event!=null) return event;
         else throw new EventNotFoundException("Event not found.");
     }
 
@@ -106,10 +110,10 @@ public class EventService {
     }
 
     public List<EventDto> getAllByUserId(long userId){
-        List<UserEvent> userEvents=userEventService.getEventsByUserId(userId);
-        List<EventDto> res=new LinkedList<>();
+        List<UserEvent> userEvents = userEventService.getEventsByUserId(userId);
+        List<EventDto> res = new LinkedList<>();
         for (UserEvent ue:
-             userEvents) {
+                userEvents) {
             res.add(EventDto.toDto(ue.getEvent()));
         }
         return res;

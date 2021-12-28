@@ -30,21 +30,21 @@ public class DefaultUserService {
     }
 
     public DefaultUser getById(Long id) {
-        return defaultUserRepository.findById(id).get();
+        return defaultUserRepository.getById(id);
     }
 
     public DefaultUser add(NewDefaultUserDto newDefaultUserDto) {
         if (userService.getByLogin(newDefaultUserDto.getLogin()) != null)
-            throw new UniqueLoginException("The login is taken");
+            throw new UniqueLoginException("The login is taken.");
         newDefaultUserDto.setPassword(passwordEncoder.encode(newDefaultUserDto.getPassword()));
         DefaultUser defaultUserEntity = NewDefaultUserDto.toEntity(newDefaultUserDto);
-        LOGGER.info("Register default user: " + defaultUserEntity);
+        LOGGER.debug("Add default user: {}", defaultUserEntity);
         return defaultUserRepository.save(defaultUserEntity);
     }
 
     public DefaultUser update(DefaultUserDto defaultUserDto) {
         if (getById(defaultUserDto.getId()) == null) throw new UserNotFoundException("User not found");
-        if(userService.getByLogin(defaultUserDto.getLogin())!=null) throw new UniqueLoginException("This login is already taken");
+        if(userService.getByLogin(defaultUserDto.getLogin())!=null) throw new UniqueLoginException("The login is taken.");
         return DefaultUserDto.toEntity(defaultUserDto);
     }
 

@@ -12,7 +12,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 
-
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
@@ -32,12 +31,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/users/register/*", "/users/login").permitAll()
                 .antMatchers(HttpMethod.POST, "/events/").hasAnyAuthority(Role.USER_BUSINESS.name())
-                .antMatchers(HttpMethod.PATCH, "/events/").hasAnyAuthority(Role.USER_BUSINESS.name())
+                .antMatchers(HttpMethod.PUT, "/events/").hasAnyAuthority(Role.USER_BUSINESS.name())
                 .antMatchers(HttpMethod.DELETE, "/events/").hasAnyAuthority(Role.USER_BUSINESS.name())
                 .antMatchers(HttpMethod.GET,"/events/").hasAnyAuthority(Role.USER_DEFAULT.name())
-                .antMatchers(HttpMethod.PATCH,"/events/subscribe").hasAnyAuthority(Role.USER_DEFAULT.name())
-                .antMatchers(HttpMethod.PATCH,"/events/unsubscribe").hasAnyAuthority(Role.USER_DEFAULT.name())
-                .antMatchers(HttpMethod.PATCH,"/events/add/review").hasAnyAuthority(Role.USER_DEFAULT.name())
+                .antMatchers(HttpMethod.PUT,"/events/subscribe").hasAnyAuthority(Role.USER_DEFAULT.name())
+                .antMatchers(HttpMethod.PUT,"/events/unsubscribe").hasAnyAuthority(Role.USER_DEFAULT.name())
+                .antMatchers(HttpMethod.PUT,"/events/add/review").hasAnyAuthority(Role.USER_DEFAULT.name())
                 .anyRequest()
                 .authenticated()
                 .and()

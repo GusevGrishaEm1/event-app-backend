@@ -30,7 +30,7 @@ public class BusinessUserService {
     }
 
     public BusinessUser getById(Long id) {
-        return businessUserRepository.findById(id).get();
+        return businessUserRepository.getById(id);
     }
 
     public BusinessUser add(NewBusinessUserDto newBusinessUserDto) {
@@ -38,13 +38,13 @@ public class BusinessUserService {
             throw new UniqueLoginException("The login is taken");
         newBusinessUserDto.setPassword(passwordEncoder.encode(newBusinessUserDto.getPassword()));
         BusinessUser businessUserEntity = NewBusinessUserDto.toEntity(newBusinessUserDto);
-        LOGGER.info("Register business user: " + businessUserEntity);
+        LOGGER.debug("Add business user: " + businessUserEntity);
         return businessUserRepository.save(businessUserEntity);
     }
 
     public BusinessUser update(BusinessUserDto businessUserDto) {
         if (getById(businessUserDto.getId()) == null) throw new UserNotFoundException("User not found");
-        if(userService.getByLogin(businessUserDto.getLogin())!=null) throw new UniqueLoginException("This login is already taken");
+        if(userService.getByLogin(businessUserDto.getLogin()) != null) throw new UniqueLoginException("This login is already taken");
         return businessUserDto.toEntity(businessUserDto);
     }
 

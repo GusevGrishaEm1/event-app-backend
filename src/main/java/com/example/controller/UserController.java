@@ -12,11 +12,8 @@ import com.example.service.DefaultUserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.example.service.UserService;
-import java.util.HashMap;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/users")
@@ -37,26 +34,35 @@ public class UserController {
     }
 
     @PostMapping("/register/default")
-    public DefaultUserDto registerDefaultUser(@RequestBody NewDefaultUserDto newDefaultUser) {
-        LOGGER.trace("Enter method: registerDefaultUser()");
+    public @ResponseBody DefaultUserDto registerDefaultUser(@RequestBody NewDefaultUserDto newDefaultUser) {
+        LOGGER.trace("Enter method: registerDefaultUser(). Params: {}", newDefaultUser);
         return defaultUserService.registerDefaultUser(newDefaultUser);
     }
 
     @PostMapping("/register/business")
-    public BusinessUserDto registerBusinessUser(@RequestBody NewBusinessUserDto newBusinessUserDto) {
-        LOGGER.trace("Enter method: registerBusinessUser()");
-        return businessUserService.registerBusinessUser(newBusinessUserDto);
+    public @ResponseBody BusinessUserDto registerBusinessUser(@RequestBody NewBusinessUserDto newBusinessUser) {
+        LOGGER.trace("Enter method: registerBusinessUser(). Params: {}", newBusinessUser);
+        return businessUserService.registerBusinessUser(newBusinessUser);
     }
 
     @PostMapping("/login")
-    public ResponseEntity login(@RequestBody AuthDto auth) {
-        LOGGER.trace("Enter method: login()");
+    public @ResponseBody String login(@RequestBody AuthDto auth) {
+        LOGGER.trace("Enter method: login(). Params: {}", auth);
         UserDto user = userService.findByLoginAndPassword(auth.getLogin(), auth.getPassword());
-        String token = jwtProvider.generateToken(user.getId(), user.getLogin(), user.getRole());
-        Map<Object, Object> response = new HashMap<>();
-        response.put("login", user.getLogin());
-        response.put("role", user.getRole());
-        response.put("token", token);
-        return ResponseEntity.ok(response);
+        return jwtProvider.generateToken(user.getId(), user.getLogin(), user.getRole());
+    }
+
+    @GetMapping("/profile/default")
+    public @ResponseBody DefaultUserDto getDefaultProfile(@RequestHeader("Authorization") String token) {
+        LOGGER.trace("Enter method: getDefaultProfile(). Params: {}", token);
+        String stillToken = jwtProvider.resolveToken(token);
+        return  DefaultUserDto.toDto(defaultUserService.getById(jwtProvider.getIdFromToken(stillToken)));
+    }
+
+    @GetMapping("/profile/business")
+    public @ResponseBody BusinessUserDto getBusinessProfile(@RequestHeader("Authorization") String token) {
+        LOGGER.trace("Enter method: getBusinessProfile(). Params: {}", token);
+        String stillToken = jwtProvider.resolveToken(token);
+        return BusinessUserDto.toDto(businessUserService.getById(jwtProvider.getIdFromToken(stillToken)));
     }
 }

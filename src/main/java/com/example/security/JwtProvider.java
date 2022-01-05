@@ -1,7 +1,6 @@
 package com.example.security;
 
 import com.example.entity.Role;
-import com.example.exception.ExpirationTokenException;
 import io.jsonwebtoken.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

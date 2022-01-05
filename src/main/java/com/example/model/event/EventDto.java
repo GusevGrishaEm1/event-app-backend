@@ -19,16 +19,6 @@ public class EventDto {
 
     private long likeCounter;
 
-    public EventDto(Long id, LocalDateTime startDate, LocalDateTime endDate, String eventName, String description, long likeCounter, int ageCensor) {
-        this.id = id;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.eventName = eventName;
-        this.description = description;
-        this.likeCounter = likeCounter;
-        this.ageCensor = ageCensor;
-    }
-
     public EventDto() {}
 
     public static Event toEntity(EventDto eventDto){

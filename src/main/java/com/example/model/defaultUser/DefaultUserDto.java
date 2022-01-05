@@ -1,7 +1,6 @@
 package com.example.model.defaultUser;
 
 import com.example.entity.DefaultUser;
-import com.example.entity.Role;
 import com.example.model.user.UserDto;
 import java.time.LocalDate;
 
@@ -11,13 +10,6 @@ public class DefaultUserDto extends UserDto {
     private LocalDate bDay;
 
     public DefaultUserDto() {
-    }
-
-    public DefaultUserDto(Long id, String login, String password, Role role, String userName, String cityName, LocalDate bDay) {
-        super(id, login, password, role);
-        this.userName = userName;
-        this.cityName = cityName;
-        this.bDay = bDay;
     }
 
     public String getUserName() {

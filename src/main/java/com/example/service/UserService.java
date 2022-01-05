@@ -35,7 +35,7 @@ public class UserService {
     }
 
     public User update(UserDto userDto) throws UserNotFoundException {
-        User userEntity = getById(userDto.getId());
+        User userEntity;
         userEntity = UserDto.toEntity(userDto);
         return userRepository.save(userEntity);
     }
@@ -48,7 +48,8 @@ public class UserService {
                 return UserDto.toDto(user);
             }
         }
-        throw new UserNotFoundException("Incorrect data has been entered or there is no such user");
+        LOGGER.error("User with  login and password [{} and {}] not found.", login, password);
+        throw new UserNotFoundException("User with  login and password {" + login +" and " + password + "} not found.");
     }
 
 

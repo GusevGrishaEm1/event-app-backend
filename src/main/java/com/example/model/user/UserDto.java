@@ -47,13 +47,6 @@ public class UserDto {
         this.role = role;
     }
 
-    public UserDto(Long id, String login, String password, Role role) {
-        this.id = id;
-        this.login = login;
-        this.password = password;
-        this.role = role;
-    }
-
     public static User toEntity(UserDto userDto) {
         User userEntity = new User();
         userEntity.setId(userDto.getId());

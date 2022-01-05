@@ -24,40 +24,20 @@ public class UserEventDto {
         this.id = id;
     }
 
-    public Long getUserId() {
-        return userId;
-    }
-
     public void setUserId(Long userId) {
         this.userId = userId;
-    }
-
-    public Long getEventId() {
-        return eventId;
     }
 
     public void setEventId(Long eventId) {
         this.eventId = eventId;
     }
 
-    public String getReview() {
-        return review;
-    }
-
     public void setReview(String review) {
         this.review = review;
     }
 
-    public Boolean getLiked() {
-        return liked;
-    }
-
     public void setLiked(Boolean liked) {
         this.liked = liked;
-    }
-
-    public Boolean getOwner() {
-        return owner;
     }
 
     public void setOwner(Boolean owner) {
@@ -72,5 +52,17 @@ public class UserEventDto {
         userEventDto.setReview(userEventEntity.getReview());
         userEventDto.setLiked(userEventEntity.getLiked());
         return userEventDto;
+    }
+
+    @Override
+    public String toString() {
+        return "UserEventDto{" +
+                "id=" + id +
+                ", userId=" + userId +
+                ", eventId=" + eventId +
+                ", review='" + review + '\'' +
+                ", liked=" + liked +
+                ", owner=" + owner +
+                '}';
     }
 }

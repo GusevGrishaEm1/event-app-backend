@@ -44,7 +44,7 @@ public class DefaultUserService {
 
     public DefaultUser update(DefaultUserDto defaultUserDto) {
         if (getById(defaultUserDto.getId()) == null) throw new UserNotFoundException("User not found");
-        if(userService.getByLogin(defaultUserDto.getLogin())!=null) throw new UniqueLoginException("The login is taken.");
+        if(userService.getByLogin(defaultUserDto.getLogin()) != null) throw new UniqueLoginException("The login is taken.");
         return DefaultUserDto.toEntity(defaultUserDto);
     }
 

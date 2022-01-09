@@ -9,6 +9,7 @@ public class Event {
 
     @Id
     @GeneratedValue
+    @Column(name="id")
     private Long id;
 
     @Column(name="eventName")

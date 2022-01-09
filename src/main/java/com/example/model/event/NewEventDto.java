@@ -5,17 +5,17 @@ import java.time.LocalDateTime;
 
 public class NewEventDto {
 
-    private LocalDateTime startDate;
+    private final LocalDateTime startDate;
 
-    private LocalDateTime endDate;
+    private final LocalDateTime endDate;
 
-    private String eventName;
+    private final String eventName;
 
-    private String description;
+    private final String description;
 
-    private int ageCensor;
+    private final int ageCensor;
 
-    private long likeCounter;
+    private final long likeCounter;
 
     public NewEventDto(LocalDateTime startDate, LocalDateTime endDate, String eventName, String description, long likeCounter, int ageCensor) {
         this.startDate = startDate;

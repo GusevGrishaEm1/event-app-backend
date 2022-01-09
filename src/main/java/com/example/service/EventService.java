@@ -114,8 +114,8 @@ public class EventService {
 
     public Event getById(Long id) {
         Event event = eventRepository.getById(id);
-        if(event!=null) return event;
-        else throw new EventNotFoundException("Event not found.");
+        if (event != null) return event;
+        else throw new EventNotFoundException("Event with id {"+ id +"} not found.");
     }
 
     public List<EventDto> getAll() {

@@ -26,7 +26,7 @@ create table usr (
 );
 
 create table usr_event (
-    id int8 not null, 
+    id int8 not null,
     liked boolean,
     owner boolean,
     review varchar(255),

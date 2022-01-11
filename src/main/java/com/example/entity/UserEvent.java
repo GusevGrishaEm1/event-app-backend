@@ -7,6 +7,7 @@ import javax.persistence.*;
 public class UserEvent {
     @Id
     @GeneratedValue
+    @Column(name="id")
     private Long id;
 
     @ManyToOne

@@ -66,4 +66,5 @@ public class UserController {
         String stillToken = jwtProvider.resolveToken(token);
         return BusinessUserDto.toDto(businessUserService.getById(jwtProvider.getIdFromToken(stillToken)));
     }
+
 }

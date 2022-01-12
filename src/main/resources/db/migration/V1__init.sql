@@ -16,18 +16,17 @@ create table usr (
     id int8 not null,
     login varchar(255),
     password varchar(255),
+    city_name varchar(255),
     role int4,
     address varchar(255),
     company_name varchar(255),
     b_day date,
-    city_name varchar(255),
     username varchar(255),
     primary key (id)
 );
 
 create table usr_event (
     id int8 not null,
-    liked boolean,
     owner boolean,
     review varchar(255),
     event_id int8,

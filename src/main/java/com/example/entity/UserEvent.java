@@ -5,6 +5,7 @@ import javax.persistence.*;
 @Entity
 @Table(name="usr_event")
 public class UserEvent {
+
     @Id
     @GeneratedValue
     @Column(name="id")
@@ -23,9 +24,6 @@ public class UserEvent {
 
     @Column(name = "review")
     private String review;
-
-    @Column(name = "liked")
-    private Boolean liked;
 
     public UserEvent() {
     }
@@ -62,14 +60,6 @@ public class UserEvent {
         this.owner = owner;
     }
 
-    public Boolean getLiked() {
-        return liked;
-    }
-
-    public void setLiked(Boolean liked) {
-        this.liked = liked;
-    }
-
     public String getReview() {
         return review;
     }
@@ -86,7 +76,6 @@ public class UserEvent {
                 ", event=" + event +
                 ", owner=" + owner +
                 ", review='" + review + '\'' +
-                ", liked=" + liked +
                 '}';
     }
 }

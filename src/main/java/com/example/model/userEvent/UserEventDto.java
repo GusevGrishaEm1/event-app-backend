@@ -12,8 +12,6 @@ public class UserEventDto {
 
     private String review;
 
-    private Boolean liked;
-
     private Boolean owner;
 
     public Long getId() {
@@ -36,10 +34,6 @@ public class UserEventDto {
         this.review = review;
     }
 
-    public void setLiked(Boolean liked) {
-        this.liked = liked;
-    }
-
     public void setOwner(Boolean owner) {
         this.owner = owner;
     }
@@ -50,7 +44,6 @@ public class UserEventDto {
         userEventDto.setEventId(userEventEntity.getEvent().getId());
         userEventDto.setOwner(userEventEntity.getOwner());
         userEventDto.setReview(userEventEntity.getReview());
-        userEventDto.setLiked(userEventEntity.getLiked());
         return userEventDto;
     }
 
@@ -61,7 +54,6 @@ public class UserEventDto {
                 ", userId=" + userId +
                 ", eventId=" + eventId +
                 ", review='" + review + '\'' +
-                ", liked=" + liked +
                 ", owner=" + owner +
                 '}';
     }

@@ -18,27 +18,12 @@ public class DefaultUser extends User {
     public DefaultUser() {
     }
 
-    public DefaultUser(Long id, String login, String password, Role role, String username, String cityName, LocalDate bDay) {
-        super(id, login, password, role);
-        this.username = username;
-        this.cityName = cityName;
-        this.bDay = bDay;
-    }
-
     public String getUsername() {
         return username;
     }
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public String getCityName() {
-        return cityName;
-    }
-
-    public void setCityName(String cityName) {
-        this.cityName = cityName;
     }
 
     public LocalDate getBDay() {
@@ -49,9 +34,18 @@ public class DefaultUser extends User {
         this.bDay = bDay;
     }
 
+    public String getCityName() {
+        return cityName;
+    }
+
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
+    }
+
     @Override
     public String toString() {
         return "DefaultUser{" +
+                super.toString() +
                 "username='" + username + '\'' +
                 ", cityName='" + cityName + '\'' +
                 ", bDay=" + bDay +

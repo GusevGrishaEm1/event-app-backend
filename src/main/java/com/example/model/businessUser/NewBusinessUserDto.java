@@ -32,4 +32,15 @@ public class NewBusinessUserDto extends NewUserDto {
         businessUserEntity.setAddress(newBusinessUserDto.getAddress());
         return businessUserEntity;
     }
+
+    @Override
+    public String toString() {
+        return "NewBusinessUserDto {" +
+                "login='" + getLogin() + '\'' +
+                ", password='" + getPassword() + '\'' +
+                ", role=" + getRole() +
+                ", companyName='" + companyName + '\'' +
+                ", address='" + address + '\'' +
+                '}';
+    }
 }

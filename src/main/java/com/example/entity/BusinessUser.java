@@ -13,12 +13,6 @@ public class BusinessUser extends User {
 
     public BusinessUser() {}
 
-    public BusinessUser(Long id, String login, String password, Role role, String companyName, String address) {
-        super(id, login, password, role);
-        this.companyName = companyName;
-        this.address = address;
-    }
-
     public String getCompanyName() {
         return companyName;
     }
@@ -38,6 +32,7 @@ public class BusinessUser extends User {
     @Override
     public String toString() {
         return "BusinessUser{" +
+                super.toString() +
                 "companyName='" + companyName + '\'' +
                 ", address='" + address + '\'' +
                 '}';

@@ -38,7 +38,7 @@ public class BusinessUserService {
             throw new UniqueLoginException("The login is taken");
         newBusinessUserDto.setPassword(passwordEncoder.encode(newBusinessUserDto.getPassword()));
         BusinessUser businessUserEntity = NewBusinessUserDto.toEntity(newBusinessUserDto);
-        LOGGER.debug("Add business user: " + businessUserEntity);
+        LOGGER.debug("Add business user: {}" + businessUserEntity);
         return businessUserRepository.save(businessUserEntity);
     }
 

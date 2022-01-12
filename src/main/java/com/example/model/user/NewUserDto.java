@@ -41,11 +41,11 @@ public class NewUserDto {
         this.role = role;
     }
 
-    public static User toEntity(NewUserDto accountDto) {
+    public static User toEntity(NewUserDto newUserDto) {
         User userEntity = new User();
-        userEntity.setLogin(accountDto.getLogin());
-        userEntity.setPassword(accountDto.getPassword());
-        userEntity.setRole(accountDto.getRole());
+        userEntity.setLogin(newUserDto.getLogin());
+        userEntity.setPassword(newUserDto.getPassword());
+        userEntity.setRole(newUserDto.getRole());
         return userEntity;
     }
 }

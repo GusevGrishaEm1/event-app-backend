@@ -5,27 +5,20 @@ import com.example.model.user.UserDto;
 import java.time.LocalDate;
 
 public class DefaultUserDto extends UserDto {
-    private String userName;
-    private String cityName;
+
+    private String username;
     private LocalDate bDay;
+    private String cityName;
 
     public DefaultUserDto() {
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getCityName() {
-        return cityName;
-    }
-
-    public void setCityName(String cityName) {
-        this.cityName = cityName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public LocalDate getBDay() {
@@ -36,14 +29,22 @@ public class DefaultUserDto extends UserDto {
         this.bDay = bDay;
     }
 
+    public String getCityName() {
+        return cityName;
+    }
+
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
+    }
+
     public static DefaultUser toEntity(DefaultUserDto defaultUserDto){
         DefaultUser defaultUserEntity = new DefaultUser();
         defaultUserEntity.setId(defaultUserDto.getId());
         defaultUserEntity.setLogin(defaultUserDto.getLogin());
         defaultUserEntity.setPassword(defaultUserDto.getPassword());
         defaultUserEntity.setRole(defaultUserDto.getRole());
-        defaultUserEntity.setUsername(defaultUserDto.getUserName());
         defaultUserEntity.setCityName(defaultUserDto.getCityName());
+        defaultUserEntity.setUsername(defaultUserDto.getUsername());
         defaultUserEntity.setBDay(defaultUserDto.getBDay());
         return defaultUserEntity;
     }
@@ -54,9 +55,22 @@ public class DefaultUserDto extends UserDto {
         defaultUserDto.setLogin(defaultUserEntity.getLogin());
         defaultUserDto.setPassword(defaultUserEntity.getPassword());
         defaultUserDto.setRole(defaultUserEntity.getRole());
-        defaultUserDto.setUserName(defaultUserEntity.getUsername());
         defaultUserDto.setCityName(defaultUserEntity.getCityName());
+        defaultUserDto.setUsername(defaultUserEntity.getUsername());
         defaultUserDto.setBDay(defaultUserEntity.getBDay());
         return defaultUserDto;
+    }
+
+    @Override
+    public String toString() {
+        return "DefaultUserDto{" +
+                "id=" + getId() + '\'' +
+                ", login='" + getLogin() + '\'' +
+                ", password='" + getPassword() + '\'' +
+                ", role=" + getRole() + '\'' +
+                ", cityName='" + cityName + '\'' +
+                ", username='" + username + '\'' +
+                ", bDay=" + bDay +
+                '}';
     }
 }

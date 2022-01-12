@@ -8,13 +8,13 @@ import java.time.LocalDate;
 public class NewDefaultUserDto extends NewUserDto {
 
     private  final String username;
-    private  final String cityName;
     private  final LocalDate bDay;
+    private final String cityName;
 
-    public NewDefaultUserDto(String login, String password, Role role, String username, String cityName, LocalDate bDay) {
+    public NewDefaultUserDto(String login, String password, Role role,String cityName, String username, LocalDate bDay) {
         super(login, password, role);
-        this.username = username;
         this.cityName = cityName;
+        this.username = username;
         this.bDay = bDay;
     }
 
@@ -22,12 +22,12 @@ public class NewDefaultUserDto extends NewUserDto {
         return username;
     }
 
-    public String getCityName() {
-        return cityName;
-    }
-
     public LocalDate getBDay() {
         return bDay;
+    }
+
+    public String getCityName() {
+        return cityName;
     }
 
     public static DefaultUser toEntity(NewDefaultUserDto newDefaultUserDto){
@@ -35,10 +35,21 @@ public class NewDefaultUserDto extends NewUserDto {
         defaultUserEntity.setLogin(newDefaultUserDto.getLogin());
         defaultUserEntity.setRole(newDefaultUserDto.getRole());
         defaultUserEntity.setPassword(newDefaultUserDto.getPassword());
+        defaultUserEntity.setCityName(newDefaultUserDto.getCityName());
         defaultUserEntity.setUsername(newDefaultUserDto.getUsername());
         defaultUserEntity.setBDay(newDefaultUserDto.getBDay());
-        defaultUserEntity.setCityName(newDefaultUserDto.getCityName());
         return defaultUserEntity;
     }
 
+    @Override
+    public String toString() {
+        return "NewDefaultUserDto{" +
+                "login='" + getLogin() + '\'' +
+                ", password='" + getPassword() + '\'' +
+                ", role=" + getRole() + '\'' +
+                ", cityName='" + cityName + '\'' +
+                ", username='" + username + '\'' +
+                ", bDay=" + bDay +
+                '}';
+    }
 }

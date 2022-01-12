@@ -42,10 +42,22 @@ public class BusinessUserDto extends UserDto {
         BusinessUserDto businessUserDto = new BusinessUserDto();
         businessUserDto.setId(businessUserEntity.getId());
         businessUserDto.setLogin(businessUserEntity.getLogin());
-        businessUserDto.setPassword(businessUserDto.getPassword());
-        businessUserDto.setRole(businessUserDto.getRole());
+        businessUserDto.setPassword(businessUserEntity.getPassword());
+        businessUserDto.setRole(businessUserEntity.getRole());
         businessUserDto.setAddress(businessUserEntity.getAddress());
         businessUserDto.setCompanyName(businessUserEntity.getCompanyName());
         return businessUserDto;
+    }
+
+    @Override
+    public String toString() {
+        return "BusinessUserDto{" +
+                "id=" + getId() + '\'' +
+                ", login='" + getLogin() + '\'' +
+                ", password='" + getPassword() + '\'' +
+                ", role=" + getRole() + '\'' +
+                ", companyName='" + companyName + '\'' +
+                ", address='" + address + '\'' +
+                '}';
     }
 }

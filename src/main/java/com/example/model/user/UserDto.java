@@ -64,4 +64,14 @@ public class UserDto {
         userDto.setRole(userEntity.getRole());
         return userDto;
     }
+
+    @Override
+    public String toString() {
+        return "UserDto {" +
+                "id=" + id +
+                ", login='" + login + '\'' +
+                ", password='" + password + '\'' +
+                ", role=" + role +
+                '}';
+    }
 }

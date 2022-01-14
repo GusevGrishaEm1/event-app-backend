@@ -14,7 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/events")
-@CrossOrigin(origins="http://localhost:3000")
+@CrossOrigin(origins="*")
 public class EventController {
 
     private final EventService eventService;
@@ -27,10 +27,10 @@ public class EventController {
         this.jwtProvider = jwtProvider;
     }
 
-    @GetMapping
-    public List<EventDto> getAllByUserId(@RequestHeader("Authorization") String token) {
-        LOGGER.trace("Enter method: getAllByUserId(). Params: {}", token);
-        return eventService.getAllByUserId(jwtProvider.getIdFromToken(jwtProvider.resolveToken(token)));
+    @GetMapping()
+    public List<EventDto> getAll(@RequestHeader("Authorization") String token) {
+        LOGGER.trace("Enter method: getAll(). Params: {}", token);
+        return eventService.getAll();
     }
 
     @PutMapping

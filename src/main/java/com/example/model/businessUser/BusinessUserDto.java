@@ -7,6 +7,15 @@ public class BusinessUserDto extends UserDto {
 
     private String companyName;
     private String address;
+    private String token;
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
 
     public BusinessUserDto() {
     }
@@ -58,6 +67,7 @@ public class BusinessUserDto extends UserDto {
                 ", role=" + getRole() + '\'' +
                 ", companyName='" + companyName + '\'' +
                 ", address='" + address + '\'' +
+                ", token='" + token + '\'' +
                 '}';
     }
 }

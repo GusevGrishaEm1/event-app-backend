@@ -9,6 +9,15 @@ public class DefaultUserDto extends UserDto {
     private String username;
     private LocalDate bDay;
     private String cityName;
+    private String token;
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
 
     public DefaultUserDto() {
     }
@@ -71,6 +80,7 @@ public class DefaultUserDto extends UserDto {
                 ", cityName='" + cityName + '\'' +
                 ", username='" + username + '\'' +
                 ", bDay=" + bDay +
+                ", token=" + token +
                 '}';
     }
 }

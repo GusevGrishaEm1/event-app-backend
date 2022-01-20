@@ -24,6 +24,9 @@ public class Event {
     @Column(name = "endDate")
     private LocalDateTime endDate;
 
+    @Column(name="address")
+    private String address;
+
     @Column(name="likeCounter")
     private Long likeCounter;
 
@@ -86,6 +89,14 @@ public class Event {
         this.ageCensor = ageCensor;
     }
 
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
     @Override
     public String toString() {
         return "Event{" +
@@ -94,6 +105,7 @@ public class Event {
                 ", description='" + description + '\'' +
                 ", startDate=" + startDate +
                 ", endDate=" + endDate +
+                ", address='" + address + '\'' +
                 ", likeCounter=" + likeCounter +
                 ", ageCensor=" + ageCensor +
                 '}';

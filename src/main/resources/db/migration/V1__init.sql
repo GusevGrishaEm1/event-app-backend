@@ -3,6 +3,7 @@ create sequence hibernate_sequence start with 1 increment by 1;
 create table event (
     id int8 not null,
     age_censor int4,
+    address varchar(255),
     description varchar(255),
     end_date timestamp,
     event_name varchar(255),

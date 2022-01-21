@@ -13,6 +13,8 @@ public class EventDto {
 
     private String eventName;
 
+    private String address;
+
     private String description;
 
     private int ageCensor;
@@ -30,6 +32,7 @@ public class EventDto {
         eventEntity.setDescription(eventDto.getDescription());
         eventEntity.setAgeCensor(eventDto.getAgeCensor());
         eventEntity.setLikeCounter(eventDto.getLikeCounter());
+        eventEntity.setAddress(eventDto.getAddress());
         return eventEntity;
     }
 
@@ -42,6 +45,7 @@ public class EventDto {
         eventDto.setDescription(eventEntity.getDescription());
         eventDto.setAgeCensor(eventEntity.getAgeCensor());
         eventDto.setLikeCounter(eventEntity.getLikeCounter());
+        eventDto.setAddress(eventEntity.getAddress());
         return eventDto;
     }
 
@@ -99,5 +103,12 @@ public class EventDto {
 
     public void setAgeCensor(int ageCensor) {
         this.ageCensor = ageCensor;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+    public void setAddress(String address) {
+        this.address = address;
     }
 }

@@ -33,6 +33,13 @@ public class EventController {
         return eventService.getAll();
     }
 
+    @GetMapping("/subscriptions")
+    public List<EventDto> getSubscriptions(@RequestHeader("Authorization") String token) {
+        LOGGER.trace("Enter method: getAllSubscriptions(). Params: {}", token);
+        String stillToken = jwtProvider.resolveToken(token);
+        return eventService.getAllByUserId(jwtProvider.getIdFromToken(stillToken));
+    }
+
     @PutMapping
     public EventDto update(@RequestBody EventDto event, @RequestHeader("Authorization") String token) {
         LOGGER.trace("Enter method: update(). Params: {}", token);
@@ -54,14 +61,14 @@ public class EventController {
         return eventService.add(newEvent, jwtProvider.getIdFromToken(stillToken));
     }
 
-    @PutMapping("/subscribe")
+    @PostMapping("/subscribe")
     public EventDto subscribe(@PathParam("eventId") Long eventId, @RequestHeader("Authorization") String token) {
         LOGGER.trace("Enter method: subscribe(). Params: {}, {}", eventId, token);
         String stillToken = jwtProvider.resolveToken(token);
         return eventService.subscribe(eventId, jwtProvider.getIdFromToken(stillToken));
     }
 
-    @PutMapping("/unsubscribe")
+    @DeleteMapping("/unsubscribe")
     public Long unsubscribe(@PathParam("eventId") Long eventId, @RequestHeader("Authorization") String token) {
         LOGGER.trace("Enter method: unsubscribe(). Params: {}, {}", eventId, token);
         String stillToken = jwtProvider.resolveToken(token);

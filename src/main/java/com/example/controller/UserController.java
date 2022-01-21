@@ -56,12 +56,12 @@ public class UserController {
         LOGGER.trace("Enter method: login(). Params: {}", auth);
         UserDto user = userService.findByLoginAndPassword(auth.getLogin(), auth.getPassword());
         String token = jwtProvider.generateToken(user.getId(), user.getLogin(), user.getRole());
-
         if (user.getRole().name() == "USER_DEFAULT") {
             DefaultUserDto res = DefaultUserDto.toDto(defaultUserService.getById(user.getId()));
             res.setToken(token);
             return res;
-        } else {
+        }
+        else {
             BusinessUserDto res = BusinessUserDto.toDto(businessUserService.getById(user.getId()));
             res.setToken(token);
             return res;

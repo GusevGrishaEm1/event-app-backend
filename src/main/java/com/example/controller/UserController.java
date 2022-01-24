@@ -15,8 +15,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-
 @RestController
 @RequestMapping("/users")
 @CrossOrigin(origins = "*")
@@ -56,7 +54,7 @@ public class UserController {
         LOGGER.trace("Enter method: login(). Params: {}", auth);
         UserDto user = userService.findByLoginAndPassword(auth.getLogin(), auth.getPassword());
         String token = jwtProvider.generateToken(user.getId(), user.getLogin(), user.getRole());
-        if (user.getRole().name() == "USER_DEFAULT") {
+        if (user.getRole().name().equals("USER_DEFAULT")) {
             DefaultUserDto res = DefaultUserDto.toDto(defaultUserService.getById(user.getId()));
             res.setToken(token);
             return res;
@@ -66,6 +64,18 @@ public class UserController {
             res.setToken(token);
             return res;
         }
+    }
+
+    @PutMapping("edit/default")
+    public DefaultUserDto updateDefaultProfile(@RequestBody DefaultUserDto defaultUserDto) {
+        LOGGER.trace("Enter method: updateDefault(). Params: {}", defaultUserDto);
+        return defaultUserService.update(defaultUserDto);
+    }
+
+    @PutMapping("edit/business")
+    public BusinessUserDto updateBusinessProfile(@RequestBody BusinessUserDto businessUserDto) {
+        LOGGER.trace("Enter method: updateBusiness(). Params: {}", businessUserDto);
+        return businessUserService.update(businessUserDto);
     }
 
     @GetMapping("/profile/default")

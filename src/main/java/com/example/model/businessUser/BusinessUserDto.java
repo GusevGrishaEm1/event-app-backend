@@ -40,8 +40,8 @@ public class BusinessUserDto extends UserDto {
         BusinessUser businessUserEntity = new BusinessUser();
         businessUserEntity.setId(businessUserDto.getId());
         businessUserEntity.setLogin(businessUserDto.getLogin());
-        businessUserDto.setPassword(businessUserDto.getPassword());
-        businessUserDto.setRole(businessUserDto.getRole());
+        businessUserEntity.setPassword(businessUserDto.getPassword());
+        businessUserEntity.setRole(businessUserDto.getRole());
         businessUserEntity.setAddress(businessUserDto.getAddress());
         businessUserEntity.setCompanyName(businessUserDto.getCompanyName());
         return businessUserEntity;

@@ -10,6 +10,7 @@ import java.util.List;
 
 @Service
 public class UserEventService {
+
     private final UserEventRepository userEventRepository;
 
     @Autowired
@@ -25,9 +26,11 @@ public class UserEventService {
         userEventRepository.deleteById(id);
         return id;
     }
+
     public UserEvent update(UserEvent userEvent) {
         return userEventRepository.save(userEvent);
     }
+
     public UserEvent getByUserAndEvent(User user, Event event) {
         return userEventRepository.findByUserAndEvent(user, event);
     }
@@ -35,6 +38,11 @@ public class UserEventService {
     public List<UserEvent> getEventsByUserId(Long userId){
         return userEventRepository.findUserEventsByUser_Id(userId);
     }
+
+    public List<UserEvent> getByReviewNotNull(Event event) {
+        return userEventRepository.findByReviewNotNullAndEvent(event);
+    }
+
     public List<UserEvent> getByEvent(Event event) {
         return userEventRepository.findByEvent(event);
     }

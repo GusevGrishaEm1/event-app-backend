@@ -99,4 +99,10 @@ public class EventController {
         LOGGER.trace("Enter method: getReviews(). Params: {}", eventId);
         return eventService.getReviews(eventId);
     }
+
+    @GetMapping("/filter")
+    public List<EventDto> getEventsByKeyword(@RequestHeader("Authorization") String token, @RequestBody String keyword){
+        LOGGER.trace("Enter method: getEventsByKeyword(). Params: {}", keyword);
+        return eventService.getAllByKeyword(keyword);
+    }
 }

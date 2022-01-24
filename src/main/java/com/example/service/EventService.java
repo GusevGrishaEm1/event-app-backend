@@ -20,6 +20,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 @Service
@@ -148,5 +149,10 @@ public class EventService {
             res.add(EventDto.toDto(ue.getEvent()));
         }
         return res;
+    }
+
+    public List<EventDto> getAllByKeyword(String keyword) {
+        List<EventDto> events = getAll();
+        return events.stream().filter(event -> event.getDescription().toLowerCase(Locale.ROOT).contains(keyword.toLowerCase(Locale.ROOT))).collect(Collectors.toList());
     }
 }

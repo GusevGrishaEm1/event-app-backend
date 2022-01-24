@@ -42,10 +42,10 @@ public class BusinessUserService {
         return businessUserRepository.save(businessUserEntity);
     }
 
-    public BusinessUser update(BusinessUserDto businessUserDto) {
+    public BusinessUserDto update(BusinessUserDto businessUserDto) {
         if (getById(businessUserDto.getId()) == null) throw new UserNotFoundException("User not found");
-        if(userService.getByLogin(businessUserDto.getLogin()) != null) throw new UniqueLoginException("This login is already taken");
-        return businessUserDto.toEntity(businessUserDto);
+        BusinessUser businessUser = businessUserRepository.save(businessUserDto.toEntity(businessUserDto));
+        return businessUserDto.toDto(businessUser);
     }
 
     public BusinessUserDto registerBusinessUser(NewBusinessUserDto newBusinessUserDto) {

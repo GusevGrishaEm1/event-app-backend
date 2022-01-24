@@ -9,6 +9,7 @@ import com.example.exception.EventNotFoundException;
 import com.example.exception.UserAccessException;
 import com.example.model.event.EventDto;
 import com.example.model.event.NewEventDto;
+import com.example.model.review.ReviewDto;
 import com.example.model.userEvent.UserEventDto;
 import com.example.repository.EventRepository;
 import org.slf4j.Logger;
@@ -16,6 +17,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -81,6 +83,8 @@ public class EventService {
                 (LocalDate.now().getYear() - defaultUserEntity.getBDay().getYear()) < eventEntity.getAgeCensor())
             throw new UserAccessException("User access exception.");
         UserEvent userEvent = new UserEvent();
+        eventEntity.setLikeCounter(eventEntity.getLikeCounter()+1);
+        eventRepository.save(eventEntity);
         userEvent.setEvent(eventEntity);
         userEvent.setUser(defaultUserEntity);
         userEvent.setOwner(false);
@@ -92,6 +96,8 @@ public class EventService {
     public Long unsubscribe(Long eventId, Long userId) {
         Event eventEntity = getById(eventId);
         User userEntity = userService.getById(userId);
+        eventEntity.setLikeCounter(eventEntity.getLikeCounter()-1);
+        eventRepository.save(eventEntity);
         UserEvent userEvent = userEventService.getByUserAndEvent(userEntity, eventEntity);
         LOGGER.debug("Unsubscribe user {} from event {}", userEntity, eventEntity);
         return userEventService.delete(userEvent.getId());
@@ -110,6 +116,18 @@ public class EventService {
         else {
             throw new UserAccessException("User access exception.");
         }
+    }
+
+    public List<ReviewDto> getReviews(Long eventId) {
+        Event event = getById(eventId);
+        List <ReviewDto> reviews = new ArrayList<>();
+        List <UserEvent> usersAndEvents = userEventService.getByReviewNotNull(event);
+        usersAndEvents.forEach(item -> reviews.add(new ReviewDto(item.getUser().getId(), defaultUserService.getById(item.getUser().getId()).getUsername(), item.getReview())));
+        return reviews;
+    }
+
+    public EventDto like(Long eventId, Long userId) {
+        return  null;
     }
 
     public Event getById(Long id) {

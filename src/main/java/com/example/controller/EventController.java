@@ -2,6 +2,7 @@ package com.example.controller;
 
 import com.example.model.event.EventDto;
 import com.example.model.event.NewEventDto;
+import com.example.model.review.ReviewDto;
 import com.example.model.userEvent.UserEventDto;
 import com.example.security.JwtProvider;
 import com.example.service.EventService;
@@ -75,13 +76,27 @@ public class EventController {
         return eventService.unsubscribe(eventId, jwtProvider.getIdFromToken(stillToken));
     }
 
+    @PostMapping("/like")
+    public EventDto like(@PathParam("eventId") Long eventId, @RequestHeader("Authorization") String token) {
+        LOGGER.trace("Enter method: like(). Params: {}, {}", eventId, token);
+        String stillToken = jwtProvider.resolveToken(token);
+        return eventService.like(eventId, jwtProvider.getIdFromToken(stillToken));
+    }
+
     @PutMapping("/add/review")
-    public UserEventDto addReview(@PathParam("eventId") Long eventId,
+    public @ResponseBody UserEventDto addReview(@PathParam("eventId") Long eventId,
                                   @PathParam("review") String review,
                                   @RequestHeader("Authorization") String token)
     {
         LOGGER.trace("Enter method: addReview(). Params: {}, {}, {}", eventId, review, token);
         String stillToken = jwtProvider.resolveToken(token);
         return eventService.addReview(eventId, review, jwtProvider.getIdFromToken(stillToken));
+    }
+
+    @GetMapping("/reviews")
+    public List<ReviewDto> getReviews(@PathParam("eventId") Long eventId)
+    {
+        LOGGER.trace("Enter method: getReviews(). Params: {}", eventId);
+        return eventService.getReviews(eventId);
     }
 }

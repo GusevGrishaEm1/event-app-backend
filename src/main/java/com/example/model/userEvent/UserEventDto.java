@@ -40,6 +40,7 @@ public class UserEventDto {
 
     public static UserEventDto toDto(UserEvent userEventEntity) {
         UserEventDto userEventDto = new UserEventDto();
+        userEventDto.setId(userEventEntity.getId());
         userEventDto.setUserId(userEventEntity.getUser().getId());
         userEventDto.setEventId(userEventEntity.getEvent().getId());
         userEventDto.setOwner(userEventEntity.getOwner());

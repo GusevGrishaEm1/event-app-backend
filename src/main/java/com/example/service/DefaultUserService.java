@@ -42,10 +42,10 @@ public class DefaultUserService {
         return defaultUserRepository.save(defaultUserEntity);
     }
 
-    public DefaultUser update(DefaultUserDto defaultUserDto) {
+    public DefaultUserDto update(DefaultUserDto defaultUserDto) {
         if (getById(defaultUserDto.getId()) == null) throw new UserNotFoundException("User not found");
-        if(userService.getByLogin(defaultUserDto.getLogin()) != null) throw new UniqueLoginException("The login is taken.");
-        return DefaultUserDto.toEntity(defaultUserDto);
+        DefaultUser defaultUser = defaultUserRepository.save(DefaultUserDto.toEntity(defaultUserDto));
+        return DefaultUserDto.toDto(defaultUser);
     }
 
     public DefaultUserDto registerDefaultUser(NewDefaultUserDto newDefaultUserDto) {

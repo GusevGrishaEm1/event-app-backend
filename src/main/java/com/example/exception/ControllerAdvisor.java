@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @ControllerAdvice
 public class ControllerAdvisor {
@@ -14,43 +15,36 @@ public class ControllerAdvisor {
 
     @ExceptionHandler(UserNotFoundException.class)
     public ResponseEntity<ErrorMessage> handleUserNotFoundException(UserNotFoundException ex) {
-        LOGGER.error("Exception: {}", ex.getMessage());
         ErrorMessage errorMessage = new ErrorMessage(ex.getMessage(), HttpStatus.NOT_FOUND.name());
+        LOGGER.error("Exception: {}, {}", errorMessage.getMessage(), errorMessage.getHttpStatus());
         return new ResponseEntity<>(errorMessage, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(UniqueLoginException.class)
-    public ResponseEntity<ErrorMessage> handleUniqueLoginException(UniqueLoginException ex) {
-        LOGGER.error("Exception: {}", ex.getMessage());
+    public @ResponseBody ResponseEntity<ErrorMessage> handleUniqueLoginException(UniqueLoginException ex) {
         ErrorMessage errorMessage = new ErrorMessage(ex.getMessage(), HttpStatus.CONFLICT.name());
+        LOGGER.error("Exception: {}, {}", errorMessage.getMessage(), errorMessage.getHttpStatus());
         return new ResponseEntity<>(errorMessage, HttpStatus.CONFLICT);
     }
 
-    @ExceptionHandler(EventDateException.class)
+    @ExceptionHandler({EventDateException.class})
     public ResponseEntity<ErrorMessage> handleEventDateException(EventDateException ex) {
-        LOGGER.error("Exception: {}", ex.getMessage());
         ErrorMessage errorMessage = new ErrorMessage(ex.getMessage(), HttpStatus.CONFLICT.name());
+        LOGGER.error("Exception: {}, {}", errorMessage.getMessage(), errorMessage.getHttpStatus());
         return new ResponseEntity<>(errorMessage, HttpStatus.CONFLICT);
     }
 
     @ExceptionHandler(UserAccessException.class)
     public ResponseEntity<ErrorMessage> handleUserAccessException(UserAccessException ex) {
-        LOGGER.error("Exception: {}", ex.getMessage());
         ErrorMessage errorMessage = new ErrorMessage(ex.getMessage(), HttpStatus.LOCKED.name());
+        LOGGER.error("Exception: {}, {}", errorMessage.getMessage(), errorMessage.getHttpStatus());
         return new ResponseEntity<>(errorMessage, HttpStatus.LOCKED);
     }
 
     @ExceptionHandler(EventNotFoundException.class)
     public ResponseEntity<ErrorMessage> handleEventNotFoundException(EventNotFoundException ex) {
-        LOGGER.error("Exception: {}", ex.getMessage());
         ErrorMessage errorMessage = new ErrorMessage(ex.getMessage(), HttpStatus.NOT_FOUND.name());
+        LOGGER.error("Exception: {}, {}", errorMessage.getMessage(), errorMessage.getHttpStatus());
         return new ResponseEntity<>(errorMessage, HttpStatus.NOT_FOUND);
-    }
-
-    @ExceptionHandler(ExpirationTokenException.class)
-    public ResponseEntity<ErrorMessage> handleExpirationTokenException(ExpirationTokenException ex) {
-        LOGGER.error("Exception: {}", ex.getMessage());
-        ErrorMessage errorMessage = new ErrorMessage(ex.getMessage(), HttpStatus.FORBIDDEN.name());
-        return new ResponseEntity<>(errorMessage, HttpStatus.FORBIDDEN);
     }
 }

@@ -153,6 +153,7 @@ public class EventService {
 
     public List<EventDto> getAllByKeyword(String keyword) {
         List<EventDto> events = getAll();
+        LOGGER.debug("Filter events by keyword {}", keyword);
         return events.stream().filter(event -> event.getDescription().toLowerCase(Locale.ROOT).contains(keyword.toLowerCase(Locale.ROOT))).collect(Collectors.toList());
     }
 }

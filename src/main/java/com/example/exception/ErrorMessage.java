@@ -10,6 +10,16 @@ public class ErrorMessage {
         this.httpStatus = httpStatus;
     }
 
+    public String getMessage() {
+        return message;
+    }
+
+    public String getHttpStatus() {
+        return httpStatus;
+    }
+
+
+
     @Override
     public String toString() {
         return "ErrorMessage{" +

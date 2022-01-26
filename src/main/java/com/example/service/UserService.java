@@ -34,12 +34,6 @@ public class UserService {
         return userRepository.findByLogin(login);
     }
 
-    public User update(UserDto userDto) throws UserNotFoundException {
-        User userEntity;
-        userEntity = UserDto.toEntity(userDto);
-        return userRepository.save(userEntity);
-    }
-
     public UserDto findByLoginAndPassword(String login, String password) {
         User user = getByLogin(login);
         if (user != null) {

@@ -48,7 +48,7 @@ public class DefaultUserService {
         return DefaultUserDto.toDto(defaultUser);
     }
 
-    public DefaultUserDto registerDefaultUser(NewDefaultUserDto newDefaultUserDto) {
+    public DefaultUserDto save(NewDefaultUserDto newDefaultUserDto) {
         newDefaultUserDto.setRole(Role.USER_DEFAULT);
         return DefaultUserDto.toDto(add(newDefaultUserDto));
     }

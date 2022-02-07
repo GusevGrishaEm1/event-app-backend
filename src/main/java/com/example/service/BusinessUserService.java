@@ -48,7 +48,7 @@ public class BusinessUserService {
         return businessUserDto.toDto(businessUser);
     }
 
-    public BusinessUserDto registerBusinessUser(NewBusinessUserDto newBusinessUserDto) {
+    public BusinessUserDto save(NewBusinessUserDto newBusinessUserDto) {
         newBusinessUserDto.setRole(Role.USER_BUSINESS);
         return BusinessUserDto.toDto(add(newBusinessUserDto));
     }

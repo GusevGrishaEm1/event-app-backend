@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/users")
-@CrossOrigin(origins = "*")
 public class UserController {
 
     private final UserService userService;
@@ -34,21 +33,21 @@ public class UserController {
         this.jwtProvider = jwtProvider;
     }
 
-    @PostMapping("/register/default")
+    @PostMapping("/defaults")
     public @ResponseBody
     DefaultUserDto registerDefaultUser(@RequestBody NewDefaultUserDto newDefaultUser) {
         LOGGER.trace("Enter method: registerDefaultUser(). Params: {}", newDefaultUser);
-        return defaultUserService.registerDefaultUser(newDefaultUser);
+        return defaultUserService.save(newDefaultUser);
     }
 
-    @PostMapping("/register/business")
+    @PostMapping("/businesses")
     public @ResponseBody
     BusinessUserDto registerBusinessUser(@RequestBody NewBusinessUserDto newBusinessUser) {
         LOGGER.trace("Enter method: registerBusinessUser(). Params: {}", newBusinessUser);
-        return businessUserService.registerBusinessUser(newBusinessUser);
+        return businessUserService.save(newBusinessUser);
     }
 
-    @PostMapping("/login")
+    @PostMapping
     public @ResponseBody
     Object login(@RequestBody AuthDto auth) {
         LOGGER.trace("Enter method: login(). Params: {}", auth);
@@ -66,32 +65,16 @@ public class UserController {
         }
     }
 
-    @PutMapping("edit/default")
+    @PutMapping("/defaults")
     public DefaultUserDto updateDefaultProfile(@RequestBody DefaultUserDto defaultUserDto) {
-        LOGGER.trace("Enter method: updateDefault(). Params: {}", defaultUserDto);
+        LOGGER.trace("Enter method: updateDefaultProfile(). Params: {}", defaultUserDto);
         return defaultUserService.update(defaultUserDto);
     }
 
-    @PutMapping("edit/business")
+    @PutMapping("/businesses")
     public BusinessUserDto updateBusinessProfile(@RequestBody BusinessUserDto businessUserDto) {
-        LOGGER.trace("Enter method: updateBusiness(). Params: {}", businessUserDto);
+        LOGGER.trace("Enter method: updateBusinessProfile(). Params: {}", businessUserDto);
         return businessUserService.update(businessUserDto);
-    }
-
-    @GetMapping("/profile/default")
-    public @ResponseBody
-    DefaultUserDto getDefaultProfile(@RequestHeader("Authorization") String token) {
-        LOGGER.trace("Enter method: getDefaultProfile(). Params: {}", token);
-        String stillToken = jwtProvider.resolveToken(token);
-        return DefaultUserDto.toDto(defaultUserService.getById(jwtProvider.getIdFromToken(stillToken)));
-    }
-
-    @GetMapping("/profile/business")
-    public @ResponseBody
-    BusinessUserDto getBusinessProfile(@RequestHeader("Authorization") String token) {
-        LOGGER.trace("Enter method: getBusinessProfile(). Params: {}", token);
-        String stillToken = jwtProvider.resolveToken(token);
-        return BusinessUserDto.toDto(businessUserService.getById(jwtProvider.getIdFromToken(stillToken)));
     }
 
 }

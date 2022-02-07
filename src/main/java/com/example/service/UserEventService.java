@@ -18,7 +18,7 @@ public class UserEventService {
         this.userEventRepository = userEventRepository;
     }
 
-    public UserEvent add(UserEvent userEvent) {
+    public UserEvent save(UserEvent userEvent) {
         return userEventRepository.save(userEvent);
     }
 
